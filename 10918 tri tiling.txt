@@ -1,0 +1,73 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+
+#define FOR(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+#define gcd(a,b) {return a ? gcd(b%a,a) : b;}
+
+
+
+
+int f(int n);
+int g(int n);
+int f(int n)
+{
+    if(n==1)return 0;
+    if(n==0)return 1;
+    else
+    {
+        return f(n-2)+(2*g(n-1));
+    }
+}
+
+int g(int n)
+{
+    if(n==1)return 1;
+    if(n==0)return 0;
+    return f(n-1)+g(n-2);
+}
+
+
+int main()
+{
+    //read("incb.txt");
+    //write("outcb.txt");
+    int n;
+    while(true)
+    {
+        scanf("%d",&n);
+        if(n==-1)break;
+        else
+        {
+            cout<<f(n)<<"\n";
+        }
+    }
+
+}
+
+

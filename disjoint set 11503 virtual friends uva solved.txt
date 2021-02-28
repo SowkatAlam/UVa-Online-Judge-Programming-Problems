@@ -1,0 +1,155 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define read freopen("incb.txt","r",stdin)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define write freopen("outcb.txt","w",stdout)
+#define dset(x) memset(x,-1,sizeof(x))
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+#define maxx 100005
+map<string,int>people;
+int f;
+int i_index=1;
+int parent[maxx];
+int friend_siz[maxx];
+int find_parent(int n)
+{
+    if(parent[n]==-1)return n;
+    else
+    {
+        return find_parent(parent[n]);
+    }
+}
+int main()
+{
+    //read;
+    //write;
+    int t;
+    string a,b;
+    sci(t);
+    loope(test,1,t)
+    {
+        cin>>f;
+        bool first_flag=true;
+        i_index=1;
+        people.clear();
+        loop(i,0,maxx)
+        {
+            parent[i]=-1;
+            friend_siz[i]=1;
+        }
+        while(f--)
+        {
+            cin>>a>>b;
+            if(first_flag==true)
+            {
+                if(a==b)
+                {
+                    people[a]=i_index++;
+                    cout<<friend_siz[people[a]]<<endl;
+                }
+                else
+                {
+                    people[a]=i_index++;
+                    people[b]=i_index++;
+                    first_flag=false;
+                    parent[people[b]]=people[a];
+                    friend_siz[people[a]]++;
+                    cout<<friend_siz[people[a]]<<endl;
+                }
+
+            }
+            else if(people[a]==0&&people[b]==0&&a==b)
+            {
+                people[a]=i_index++;
+                cout<<friend_siz[people[a]]<<endl;
+            }
+            else if(people[a]==0&&people[b]==0)
+            {
+                people[a]=i_index++;
+                people[b]=i_index++;
+                parent[people[b]]=people[a];
+                friend_siz[people[a]]++;
+                cout<<friend_siz[people[a]]<<endl;
+            }
+            else if(people[a]==0)
+            {
+                people[a]=i_index++;
+                int temp_parent=find_parent(people[b]);
+                parent[people[a]]=temp_parent;
+                friend_siz[temp_parent]++;
+                cout<<friend_siz[temp_parent]<<endl;
+            }
+            else if(people[b]==0)
+            {
+                people[b]=i_index++;
+                int temp_parent=find_parent(people[a]);
+                parent[people[b]]=temp_parent;
+                friend_siz[temp_parent]++;
+                cout<<friend_siz[temp_parent]<<endl;
+            }
+            else
+            {
+                int temp_parent_a=find_parent(people[a]);
+                int temp_parent_b=find_parent(people[b]);
+                if(temp_parent_a==temp_parent_b)
+                {
+                    cout<<max(friend_siz[temp_parent_a],friend_siz[temp_parent_a])<<endl;
+                }
+                else
+                {
+                    parent[temp_parent_b]=temp_parent_a;
+                    friend_siz[temp_parent_a]+=friend_siz[temp_parent_b];
+                    cout<<friend_siz[temp_parent_a]<<endl;
+                }
+            }
+        }
+    }
+}

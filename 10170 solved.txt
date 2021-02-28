@@ -1,0 +1,57 @@
+
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+#define endl '\n'
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+
+#define FOR(xxxxx,aaaaa,nnnnn) for(int xxxxx=aaaaa;xxxxx<=nnnnn;xxxxx++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+
+
+int main()
+{
+    //read("incb.txt");
+    unsigned long long int s,d;
+
+    while(scanf("%llu%llu",&s,&d)==2)
+    {
+        unsigned long long int totalday=0;
+
+        while(true)
+        {
+            if(totalday>=d)break;
+            totalday+=s;
+            s++;
+        }
+        printf("%llu\n",s-1);
+    }
+}

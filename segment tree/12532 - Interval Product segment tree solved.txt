@@ -1,0 +1,166 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+typedef vector<int>vi;
+
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define dset(x) memset(x,-1,sizeof(x))
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define read freopen("incb.txt","r",stdin)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define dv(x) cout << #x << ": " <<x << endl
+#define write freopen("outcb.txt","w",stdout)
+#define dvall(x)cout<<"\n";loop(i,0,x.size())cout<<#x<<"["<<i<<"]: "<<x[i]<<"    ";cout<<"\n";
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+
+
+#define maxx 100005
+int n,q,temp;
+vi v;
+char c;
+int x,y;
+int tree[maxx*4];
+
+void update(int id,int pos,int val,int l,int r)
+{
+    if(pos<l||pos>r)return ;
+    if(l==r)
+    {
+        tree[id]=val;
+        return ;
+    }
+    else
+    {
+        int mid=(l+r)/2;
+        int left=id*2;
+        int right=left+1;
+
+
+        update(left,pos,val,l,mid);
+        update(right,pos,val,mid+1,r);
+
+
+        tree[id]=tree[left]*tree[right];
+        return ;
+    }
+}
+void init(int id,int l,int r)
+{
+    if(l==r)
+    {
+        tree[id]=v[l];
+        return ;
+    }
+    else
+    {
+        int mid=(l+r)/2;
+        int left=id*2;
+        int right=left+1;
+
+        init(left,l,mid);
+        init(right,mid+1,r);
+        tree[id]=tree[left]*tree[right];
+        return ;
+    }
+}
+int query(int id,int xx,int yy,int l,int r)
+{
+    if(xx>r||yy<l)return 1;
+    else if(xx<=l&&yy>=r)return tree[id];
+    else
+    {
+        int mid=(l+r)/2;
+        int left=id*2;
+        int right=left+1;
+        return query(left,xx,yy,l,mid)*query(right,xx,yy,mid+1,r);
+    }
+}
+int main()
+{
+    //read;
+    //write;
+    while(sci2(n,q)==2)
+    {
+        v.pb(0);
+    loope(i,1,n)
+    {
+        sci(temp);
+        if(temp>=1)temp=1;
+        else if(temp<=-1)temp=-1;
+        v.pb(temp);
+    }
+    init(1,1,n);
+
+    loope(i,1,q)
+    {
+        cin>>c;
+    cin>>x>>y;
+
+    if(c=='C')
+    {
+        temp=y;
+        if(temp>=1)temp=1;
+        else if(temp<=-1)temp=-1;
+        y=temp;
+        update(1,x,y,1,n);
+    }
+    else if(c=='P')
+    {
+        int ans=query(1,x,y,1,n);
+
+        if(ans>=1)
+        {
+            printf("+");
+        }
+        else if(ans==0)
+        {
+            printf("0");
+        }
+        else if(ans<=-1)
+        {
+            printf("-");
+        }
+
+    }
+    }
+    printf("\n");
+    v.clear();
+    loope(j,0,maxx*4)tree[j]=0;
+    }
+
+}

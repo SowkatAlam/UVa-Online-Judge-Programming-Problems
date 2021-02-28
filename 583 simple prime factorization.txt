@@ -1,0 +1,127 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define INF  (int)1e9
+#define LL long long int
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define all(c) c.begin(), c.end()
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define set1(x) memset(x,-1,sizeof(x))
+#define set0(x) memset(a,0,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+#define abs(x) { return x>0 ? x : -x;}
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define setinf(x) memset(x,126,sizeof(x))
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+#define maxx 50000
+bool flag[maxx+1]={false};
+vi v;
+void magic_box(long long int n,bool numberid)
+{
+    bool first=true;
+    int index=0;
+    bool checkprime=true;
+    while(n>1&&index<5133)
+    {
+        if(n%v[index]==0)
+        {
+            checkprime=false;
+            if(numberid==false&&first==true)
+            {
+                printf("%d",v[index]);
+                first=false;
+                n=n/v[index];
+                continue;
+            }
+            printf(" x %d",v[index]);
+            n=n/v[index];
+
+        }
+        else
+        {
+            index++;
+        }
+    }
+    if(checkprime==true)
+    {
+        if(numberid==true)
+        {
+            printf(" x %lli",n);
+        }
+        else
+        {
+            printf("%lli",n);
+        }
+    }
+    printf("\n");
+}
+int main()
+{
+
+    //read("incb.txt");
+    v.pb(2);
+    for(int i=3;i<=maxx;i+=2)
+    {
+        if(flag[i]==false)
+        {
+            v.pb(i);
+            for(int j=(2*i);j<=maxx;j+=(i))flag[j]=true;
+        }
+    }
+    long long int n;
+
+    while(cin>>n)
+    {
+        bool neg=false;
+        if(n==0)break;
+        if(n<0)
+        {
+            neg=true;
+            n=n*(-1);
+        }
+        if(neg==true)
+        {
+            printf("%lli = -1",n*(-1));
+        }
+        else
+        {
+            printf("%lli = ",n);
+        }
+        magic_box(n,neg);
+    }
+}

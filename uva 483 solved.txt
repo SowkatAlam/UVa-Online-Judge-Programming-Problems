@@ -1,0 +1,63 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack> 
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+char line[100000];
+int total_length;
+
+void f()
+{
+	int first=0,last,temp;
+	while(first<=total_length)
+	{
+		if(line[first]==' ')
+		{
+			printf(" ");
+			first++;
+
+		}
+		else
+		{
+			last=first;
+			while(line[last]!=' '&&last<=total_length)
+			{
+				last++;
+			}
+			temp=last;
+			last--;
+			while(last>=first)
+			{
+				cout<<line[last];
+				last--;
+			}
+			first=temp;
+		}
+	}
+}
+int main()
+{
+	//freopen("in.txt","r",stdin);
+	while(gets(line))
+	{
+		total_length=strlen(line);
+		total_length--;
+		f();
+		printf("\n");
+	}
+}

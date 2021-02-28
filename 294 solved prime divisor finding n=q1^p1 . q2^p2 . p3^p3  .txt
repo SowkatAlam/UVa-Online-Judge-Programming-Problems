@@ -1,0 +1,138 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define INF  (int)1e9
+#define LL long long int
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define all(c) c.begin(), c.end()
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define set1(x) memset(x,-1,sizeof(x))
+#define set0(x) memset(a,0,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+#define abs(x) { return x>0 ? x : -x;}
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define setinf(x) memset(x,126,sizeof(x))
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+#define maxx 32000
+bool flag[maxx+1]={false};
+vi v;
+ULL ansid;
+ULL ansdivisor=0;
+int siz;
+void prime_factorization(ULL n)
+{
+
+    ULL tempn=n;
+    int index=0;
+    ULL tempdivisor=0;
+    ULL tempprime;
+    ULL tempans=1;
+    bool first=false;
+
+    bool checkprime=true;
+    ULL checprimeull=sqrt(n)+1;
+
+    while(tempn>1&&index<siz)
+    {
+        if(checkprime==true&&v[index]>checprimeull)
+        {
+            tempdivisor++;
+            break;
+        }
+        if(tempn%v[index]==0)
+        {
+            checkprime=false;
+            if(first==false)
+            {
+                tempprime=v[index];
+                tempdivisor++;
+                first=true;
+            }
+            else if(tempprime!=v[index])
+            {
+                tempans=tempans*(tempdivisor+1);
+                tempprime=v[index];
+                tempdivisor=1;
+            }
+            else
+            {
+                tempdivisor++;
+            }
+            tempn=tempn/v[index];
+        }
+        else
+        {
+            index++;
+        }
+    }
+    tempans=tempans*(tempdivisor+1);
+    if(tempans>ansdivisor)
+    {
+        ansdivisor=tempans;
+        ansid=n;
+    }
+}
+int main()
+{
+
+    //read("incb.txt");
+    v.pb(2);
+    for(int i=3;i<=maxx;i+=2)
+    {
+        if(flag[i]==false)
+        {
+            v.pb(i);
+            for(int j=i*i;j<=maxx;j+=(2*i))flag[j]=true;
+        }
+    }
+    siz=v.size();
+    int testcase;
+    ULL lower,upper;
+    cin>>testcase;
+    while(testcase--)
+    {
+        cin>>lower>>upper;
+        for(ULL i=lower;i<=upper;i++)
+        {
+
+            prime_factorization(i);
+        }
+        printf("Between %llu and %llu, %llu has a maximum of %llu divisors.\n",lower,upper,ansid,ansdivisor);
+        ansdivisor=0;
+    }
+}

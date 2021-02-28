@@ -1,0 +1,139 @@
+
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+#define endl '\n'
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+
+#define FOR(xxxxx,aaaaa,nnnnn) for(int xxxxx=aaaaa;xxxxx<=nnnnn;xxxxx++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+vector<int>v[40];
+map<int,int>current_index;
+map<int,int>color;
+int index_count;
+int dist;
+
+void bfs(int node)
+{
+    queue<int>q;
+    q.push(node);
+    color[node]=2;
+    int level[40];
+    level[current_index[node]]=0;
+
+    while(!q.empty())
+    {
+        int u=q.front();
+
+
+        for(int i=0;i<(int)v[current_index[u]].size();i++)
+        {
+            int v1=v[current_index[u]][i];
+            //cout<<v1<<"  "<<color[current_index[v1]]<<endl;
+            if(color[v1]==1&&level[current_index[u]]+1<=dist)
+            {
+                color[v1]=2;
+                level[current_index[v1]]=level[current_index[u]]+1;
+                q.push(v1);
+            }
+        }
+        q.pop();
+    }
+}
+int main()
+{
+    //read("incb.txt");
+    //write("outcb.txt");
+    int nc,node1,node2;
+    int testcasenumber=1;
+
+    while(true)
+    {
+        cin>>nc;
+        if(nc==0)break;
+        index_count=0;
+        for(int i=0;i<nc;i++)
+        {
+            cin>>node1>>node2;
+            if(current_index[node1]==0)
+            {
+                current_index[node1]=++index_count;
+            }
+            if(current_index[node2]==0)
+            {
+                current_index[node2]=++index_count;
+            }
+            v[current_index[node1]].push_back(node2);
+            v[current_index[node2]].push_back(node1);
+        }
+        map<int,int>temp;
+        for(map<int,int> ::iterator it=current_index.begin();it!=current_index.end();it++)
+            {
+                temp[it->first]=1;
+            }
+        int node;
+
+        while(true)
+        {
+            scanf("%d%d",&node,&dist);
+
+            if(node==0&&dist==0)break;
+            for(map<int,int> ::iterator it=current_index.begin();it!=current_index.end();it++)
+            {
+                color[it->first]=1;
+
+            }
+            int ans=0;
+
+            bfs(node);
+
+            for(map<int,int> ::iterator it=color.begin();it!=color.end();it++)
+            {
+                if(color[it->first]==1&&temp[it->first]==1)
+                {
+
+                    ans++;
+                }
+            }
+
+            printf("Case %d: %d nodes not reachable from node %d with TTL = %d.\n",testcasenumber++,ans,node,dist);
+            color.clear();
+        }
+
+        current_index.clear();
+
+        for(int i=0;i<=index_count;i++)
+        {
+            v[i].clear();
+        }
+    }
+
+}

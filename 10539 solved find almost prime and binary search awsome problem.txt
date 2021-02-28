@@ -1,0 +1,120 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define INF  (int)1e9
+#define LL long long int
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define all(c) c.begin(), c.end()
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define set1(x) memset(x,-1,sizeof(x))
+#define set0(x) memset(a,0,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+#define abs(x) { return x>0 ? x : -x;}
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define setinf(x) memset(x,126,sizeof(x))
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+#define maxx 1000000
+#define limit 1000000000000
+
+bool check[maxx+1]={false};
+
+vector<ULL>v;
+
+void mystery_box_generatealmostprime(ULL ans,ULL n)
+{
+    ULL temp=ans*n;
+    while(temp<limit)
+    {
+        v.pb(temp);
+        ans=temp;
+        temp=ans*n;
+    }
+}
+int mystery_box_binarysearch(int i,int j,ULL n)
+{
+    if(i-j==0)return i;
+    if(j<i)return i;
+    else
+    {
+        int mid=(i+j)/2;
+        if(v[mid]==n)return mid;
+        else if(n<v[mid])
+        {
+            return mystery_box_binarysearch(i,mid-1,n);
+        }
+        else
+        {
+            return mystery_box_binarysearch(mid+1,j,n);
+        }
+    }
+}
+int main()
+{
+    //read("incb.txt");
+    mystery_box_generatealmostprime((ULL)2,(ULL)2);
+    for(int i=3;i<=maxx;i+=2)
+    {
+        if(check[i]==false)
+        {
+            mystery_box_generatealmostprime((ULL)i,(ULL)i);
+
+            for(int j=2*i;j<=maxx;j+=i)
+            {
+                check[j]=true;
+            }
+        }
+    }
+
+    sort(v.begin(),v.end());
+    int testcase;
+    cin>>testcase;
+    ULL n1,n2;
+    int siz=v.size()-1;
+
+    while(testcase--)
+    {
+        cin>>n1>>n2;
+        int indexupper=mystery_box_binarysearch(0,siz,n1);
+        if(v[indexupper]<n1)indexupper++;
+        int indexlower=mystery_box_binarysearch(0,siz,n2);
+        if(v[indexlower]>n2)indexlower--;
+        int ans=indexlower-indexupper+1;
+        if(ans<0)ans=0;
+        printf("%d\n",ans);
+    }
+}

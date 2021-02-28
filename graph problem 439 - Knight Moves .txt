@@ -1,0 +1,121 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define read freopen("incb.txt","r",stdin)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define write freopen("outcb.txt","w",stdout)
+#define dset(x) memset(x,-1,sizeof(x))
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+int chess[9][9];
+
+string a,b;
+int start_r,start_c,end_r,end_c;
+int rr[8]={-1,-1,-2,-2,1,1,2,2};
+int cc[8]={-2,2,-1,1,-2,2,-1,1};
+void magic_box()
+{
+    chess[start_r][start_c]=1;
+    queue<int>q;
+    q.push(start_r);
+    q.push(start_c);
+    bool flag=true;
+    while(!q.empty())
+    {
+        if(flag==false)break;
+        int r=q.front();
+        q.pop();
+        int c=q.front();
+        q.pop();
+        loop(i,0,8)
+        {
+            int temp_r=r+rr[i],temp_c=c+cc[i];
+            if(temp_r>0&&temp_r<9&&temp_c>0&&temp_c<9)
+            {
+                if(chess[temp_r][temp_c]==0)
+                {
+                    chess[temp_r][temp_c]=chess[r][c]+1;
+                    q.push(temp_r);
+                    q.push(temp_c);
+                    if(end_r==temp_r&&end_c==temp_c)
+                    {
+                        //cout<<chess[temp_r][temp_c]-1<<endl;
+                        cout<<"To get from "<<a<<" to "<<b<<" takes "<<chess[temp_r][temp_c]-1<<" knight moves.\n";
+                        flag=false;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    //read;
+    while(cin>>a>>b)
+    {
+        dclear(chess);
+        start_r=a[0]-96;
+        start_c=a[1]-48;
+        end_r=b[0]-96;
+        end_c=b[1]-48;
+        if(start_c==end_c&&start_r==end_r)
+        {
+            cout<<"To get from "<<a<<" to "<<b<<" takes "<<0<<" knight moves.\n";
+        }
+        else
+        {
+            magic_box();
+        }
+
+    }
+
+}

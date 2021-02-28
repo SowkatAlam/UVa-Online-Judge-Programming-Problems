@@ -1,0 +1,62 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+
+int main()
+{
+    
+    int T,amplitude,frequency;
+    cin>>T;
+
+    while(T--)
+    {
+        cin>>amplitude>>frequency;
+
+        while(frequency--)
+        {
+            for(int i=1;i<=amplitude;i++)
+            {
+                for(int j=1;j<=i;j++)
+                {
+                    cout<<i;
+                }
+                cout<<"\n";
+            }
+            for(int i=amplitude-1;i>=1;i--)
+            {
+                for(int j=1;j<=i;j++)
+                {
+                    cout<<i;
+                }
+                if(T==0&&i==1&&frequency==0)
+                {
+
+                }
+                else
+                {
+                    cout<<"\n";
+                }
+
+            }
+            cout<<"\n";
+        }
+    }
+}

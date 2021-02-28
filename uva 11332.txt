@@ -1,0 +1,38 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+unsigned long long int n;
+
+unsigned long long int magic_box( unsigned long long int temp){
+    unsigned long long int ans=0;
+
+    while(temp>9){
+        ans=ans+(temp%10);
+        temp=temp/10;
+    }
+    ans+=temp;
+    return ans;
+}
+int main(){
+    //freopen("incb.txt","r", stdin);
+    cin>>n;
+    while(n!=0){
+            while(n>9){
+                n= magic_box(n);
+            }
+        cout<<n<<endl;
+        cin>>n;
+    }
+}

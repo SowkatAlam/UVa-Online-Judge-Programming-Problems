@@ -1,0 +1,124 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+#define abs(x) { return x>0 ? x : -x;}
+#define FOR(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+#define gcd(a,b) {return a ? gcd(b%a,a) : b;}
+
+int *parent;
+
+struct data
+{
+    int u,v,w;
+    data(int u1,int v1,int w1)
+    {
+        u=u1;
+        v=v1;
+        w=w1;
+    }
+    bool operator<(const data &a)const
+    {
+        return a.w<w;
+    }
+};
+priority_queue<data>pq;
+
+int findparent(int n)
+{
+    if(parent[n]==n)return n;
+    else
+    {
+        return parent[n]=findparent(parent[n]);
+    }
+}
+void process(int node1,int node2,int siz)
+{
+    int u=findparent(parent[node1]);
+    int v=findparent(parent[node2]);
+    parent[v]=u;
+}
+int kruskal(int siz)
+{
+    int ans=0;
+    for(int i=0;i<=siz;)
+    {
+        if(!pq.empty())
+        {
+           data temp=pq.top();
+
+            if(findparent(temp.u)!=findparent(temp.v))
+            {
+
+                ans=ans+temp.w;
+                process(temp.u,temp.v,siz);
+                i++;
+            }
+            pq.pop();
+        }
+        else
+        {
+            break;
+        }
+
+
+    }
+    return ans;
+}
+
+int main()
+{
+    //read("incb.txt");
+    int m,n;
+    while(scanf("%d%d",&m,&n))
+    {
+        if(m==0&&n==0)break;
+
+        int node1,node2,weight,total=0;
+        parent=new int[m+1];
+        FOR(i,0,m)
+        {
+            parent[i]=i;
+        }
+        set<int>s;
+        while(n--)
+        {
+            scanf("%d%d%d",&node1,&node2,&weight);
+            pq.push(data(node1,node2,weight));
+            s.insert(node1);
+            s.insert(node2);
+            total+=weight;
+        }
+        printf("%d\n",total-kruskal(s.size()-1));
+        delete(parent);
+        while(!pq.empty())
+        {
+            pq.pop();
+        }
+    }
+}

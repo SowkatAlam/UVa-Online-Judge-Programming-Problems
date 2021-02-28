@@ -1,0 +1,45 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+int f91(long long int N)
+{
+
+    if(N<=100)
+    {
+        return f91(f91(N+11));
+    }
+    else
+    {
+        return (N-10);
+    }
+}
+
+int main()
+{
+    long long int N;
+    cin>>N;
+    while(N!=0)
+    {
+        cout<<"f91("<<N<<") = "<<f91(N)<<endl;
+        cin>>N;
+    }
+
+}

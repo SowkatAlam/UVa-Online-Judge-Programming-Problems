@@ -1,0 +1,170 @@
+
+
+
+
+
+
+
+
+
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+
+vector< vector<char> > vec;
+
+int c2[]={0,1,2,3,4,5,6,7,8,9};
+char c1[]={'0','1','2','3','4','5','6','7','8','9'};
+
+void search_again(int i,int j,int n,int m);
+
+void search_s(int n,int m)
+{
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            if(vec[i][j]!='*')
+            {
+                search_again(i,j,n,m);
+            }
+
+        }
+    }
+}
+
+int main()
+{
+    long long int n,m,l;
+    vector<char>v_temp;
+
+    char c;
+
+    for(l=1;scanf("%llu%llu\n",&n,&m)==2; l++) {
+        if(n == 0 && m == 0) break;
+        if(l>1)
+        {
+            cout<<"\n";
+        }
+    for(int j=0;j<n;j++)
+        {
+            for(int i=0;i<m;i++)
+           {
+               cin>>c;
+               v_temp.push_back(c);
+
+           }
+           vec.push_back(v_temp);
+
+           v_temp.clear();
+
+        }
+        search_s(n,m);
+        cout<<"Field #"<<l<<":"<<endl;
+        for(int o=0;o<n;o++)
+        {
+            for(int p=0;p<m;p++)
+            {
+                cout<<vec[o][p];
+
+            }
+            cout<<endl;
+
+        }
+        vec.clear();
+
+}
+
+}
+
+
+void search_again(int i,int j,int n,int m)
+{
+    int count_ans=0;
+    if((j-1)>=0)
+    {
+        if(vec[i][j-1]=='*')
+        {
+            count_ans++;
+        }
+    }
+    if((j+1)<=m-1)
+    {
+        if(vec[i][j+1]=='*')
+        {
+            count_ans++;
+        }
+    }
+    if((i-1)>=0)
+    {
+        if(vec[i-1][j]=='*')
+        {
+            count_ans++;
+        }
+    }
+    if((i+1)<=n-1)
+    {
+        if(vec[i+1][j]=='*')
+        {
+            count_ans++;
+        }
+    }
+    if((i-1)>=0&&(j-1)>=0)
+    {
+        if(vec[i-1][j-1]=='*')
+        {
+            count_ans++;
+        }
+    }
+    if((i+1)<=(n-1)&&(j+1)<=(m-1))
+    {
+        if(vec[i+1][j+1]=='*')
+        {
+            count_ans++;
+        }
+    }
+    if((i-1)>=0&&(j+1)<=(m-1))
+    {
+        if(vec[i-1][j+1]=='*')
+        {
+            count_ans++;
+        }
+    }
+    if((i+1)<=(n-1)&&(j-1)>=0)
+    {
+        if(vec[i+1][j-1]=='*')
+        {
+            count_ans++;
+        }
+    }
+
+
+    for(int e=0;e<10;e++)
+    {
+        if(count_ans==c2[e])
+        {
+            vec[i][j]=c1[e];
+            break;
+        }
+    }
+
+
+}

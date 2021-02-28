@@ -1,0 +1,161 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define INF  (int)1e9
+#define LL long long int
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define all(c) c.begin(), c.end()
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define set1(x) memset(a,-1,sizeof(x))
+#define set0(x) memset(a,0,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+#define abs(x) { return x>0 ? x : -x;}
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define setinf(x) memset(x,126,sizeof(x))
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+
+
+
+#define maxx 110
+struct data
+{
+    int index;
+    bool problems[15];
+    int problempertime[15];
+    int no_problem=0;
+    int totaltime=0;
+    data()
+    {
+        loop(i,0,12)
+        {
+            problempertime[i]=0;
+            problems[i]=false;
+        }
+    }
+    bool operator<(const data &a)const
+    {
+        if(a.no_problem==no_problem)
+        {
+            if(a.totaltime==totaltime)
+            {
+                return a.index<index;
+            }
+            else
+            {
+                return a.totaltime<totaltime;
+            }
+        }
+        else return a.no_problem>no_problem;
+    }
+};
+bool boolcontastant[110];
+int main()
+{
+    //read("incb.txt");
+    //write("outcb.txt");
+    int test;
+
+    sci(test);
+    getchar();
+    getchar();
+    int constant,problem_no,time;
+    char output;
+    string s;
+    while(test--)
+    {
+        data d[maxx];
+
+        loop(i,0,105)
+            {
+                boolcontastant[i]=false;
+            }
+       while(getline(cin,s))
+        {
+            if(s.size()==0)break;
+            stringstream ss(s);
+            ss>>constant>>problem_no>>time>>output;
+
+            boolcontastant[constant]=true;
+
+                if(output=='C')
+                {
+                    if(d[constant].problems[problem_no]==false)
+                    {
+                        d[constant].index=constant;
+                        d[constant].no_problem++;
+                        d[constant].totaltime+=d[constant].problempertime[problem_no]+time;
+                        d[constant].problems[problem_no]=true;
+                    }
+                }
+                if(output=='I')
+                {
+                    if(d[constant].problems[problem_no]==false)
+                    {
+                        d[constant].index=constant;
+                        d[constant].problempertime[problem_no]+=20;
+                    }
+
+                }
+                else
+                {
+                    d[constant].index=constant;
+                }
+
+        }
+
+        priority_queue<data>v;
+        loope(i,0,103)
+        {
+            if(boolcontastant[i]==true)
+            {
+
+                v.push(d[i]);
+            }
+        }
+        while(!v.empty())
+        {
+            printf("%d %d %d\n",v.top().index,v.top().no_problem,v.top().totaltime);
+            v.pop();
+        }
+
+
+        if(test>0)printf("\n");
+
+    }
+}
+

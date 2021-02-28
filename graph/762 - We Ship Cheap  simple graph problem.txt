@@ -1,0 +1,226 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+
+#include bitsstdc++.h
+using namespace std;
+
+typedef vectorintvi;
+
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf(%d,&x)
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define sci2(x,y) scanf(%d%d,&x,&y)
+#define dset(x) memset(x,-1,sizeof(x))
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;xn;x++)
+#define read freopen(incb.txt,r,stdin)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x=n;x++)
+#define rloope(x,a,n) for(int x=a;x=n;x--)
+#define sci3(x,y,z) scanf(%d%d%d,&x,&y,&z)
+#define dv(x) cout  #x    x  endl
+#define write freopen(outcb.txt,w,stdout)
+#define dvall(x, r)coutn;loope(i,0,r)cout#x[i] x[i]    ;coutn;
+#define trall(container, it)
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+
+int n;
+#define maxx 100000
+vectorintv[maxx+5];
+mapstring,intcity_id;
+mapint,stringcity_str;
+
+int id=1;
+
+int path[maxx+2]={-2};
+bool ans_found;
+void magic_box_bfs(int snode,int enode)
+{
+    queueintq;
+    q.push(snode);
+    bool flag[id+2]={false};
+    flag[snode]=true;
+    int dist[id+2];
+    loop(i,0,id+1)
+    {
+        dist[i]=1000000;
+    }
+    dist[snode]=1;
+    path[snode]=-1;
+    while(!q.empty())
+    {
+        int u=q.front();
+        q.pop();
+
+        loop(i,0,v[u].size())
+        {
+            int vv=v[u][i];
+
+            if(dist[u]+1dist[vv])
+            {
+                path[vv]=u;
+
+                if(vv==enode)
+                {
+                    ans_found=true;
+
+
+
+                    dist[vv]=dist[u]+1;
+                q.push(vv);
+                return ;
+                }
+                dist[vv]=dist[u]+1;
+                q.push(vv);
+                flag[vv]=true;
+
+            }
+        }
+    }
+
+}
+void print_ans(int node)
+{
+    if(path[node]==-1)return ;
+    print_ans(path[node]);
+    coutcity_str[path[node]] city_str[node]endl;
+}
+int main()
+{
+    read;
+    string tempa,tempb;
+    bool first=true;
+    while(sci(n)==1)
+    {
+        id=1;
+        ans_found=false;
+        loope(i,1,n)
+        {
+            cintempatempb;
+            if(city_id[tempa]==0)
+            {
+                city_str[id]=tempa;
+                city_id[tempa]=id++;
+            }
+            if(city_id[tempb]==0)
+            {
+                city_str[id]=tempb;
+                city_id[tempb]=id++;
+            }
+            v[city_id[tempa]].pb(city_id[tempb]);
+            v[city_id[tempb]].pb(city_id[tempa]);
+        }
+        cintempatempb;
+        if(first==true)
+        {
+            first=false;
+        }
+        else
+        {
+            printf(n);
+        }
+        magic_box_bfs(city_id[tempa],city_id[tempb]);
+        if(ans_found==false)
+        {
+            printf(No routen);
+        }
+        else
+        {
+            print_ans(city_id[tempb]);
+        }
+        city_id.clear();
+        city_str.clear();
+        loop(i,0,id+2)
+        {
+            v[i].clear();
+        }
+    }
+}
+
+
+#define maxx 210
+
+vectorstringwords;
+mapstring,intid;
+vectorintbfs_vector[maxx+5];
+
+bool magic_box_string_compare(string tempa,string tempb)
+{
+    int diff=0;
+    int siza=tempa.size();
+    int sizb=tempb.size();
+    if(siza!=sizb)return false;
+    loop(i,0,siza)
+    {
+        if(diff1)return false;
+        if(tempa[i]!=tempb[i])diff++;
+    }
+    if(diff==0)return false;
+    return true;
+}
+void magic_box_bfs()
+{
+    int len=words.size();
+    loop(i,0,len)
+    {
+        loop(j,i+1,len)
+        {
+            if(magic_box_string_compare(words[i],words[j]))
+            {
+                bfs_vector[id[words[i]]].pb(id[words[j]]);
+
+                bfs_vector[id[words[j]]].pb(id[words[i]]);
+            }
+        }
+    }
+
+
+}
+int main()
+{
+    read;
+    string s;
+    bool star_found=false;
+    int index=0;
+    while(cins)
+    {
+        if(s.compare()==0)
+        {
+            star_found=true;
+
+            magic_box_bfs();
+        }
+        else
+        {
+            if(!star_found)
+            {
+                words.pb(s);
+                id[s]=index++;
+            }
+            else
+            {
+
+            }
+        }
+    }
+}
+

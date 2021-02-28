@@ -1,0 +1,95 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+
+#define FOR(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+#define gcd(a,b) {return a ? gcd(b%a,a) : b;}
+int **a;
+
+int main()
+{
+    //read("incb.txt");
+    //write("outcb.txt");
+    int n,r,weight;
+    string name1,name2;
+    int index=1;
+    int testcase=1;
+    while(true)
+    {
+        index=1;
+        scanf("%d%d",&n,&r);
+        if(n==0&&r==0)break;
+        map<string,int>mp;
+        a=new int*[n+1];
+        FOR(i,1,n)
+        {
+            a[i]=new int[n+1];
+        }
+        FOR(i,1,n)
+        {
+
+            FOR(j,1,n)
+            {
+
+                    a[i][j]=0;
+
+
+            }
+        }
+        while(r--)
+        {
+            cin>>name1>>name2>>weight;
+            if(mp[name1]==0)
+            {
+                mp[name1]=index++;
+            }
+            if(mp[name2]==0)
+            {
+                mp[name2]=index++;
+            }
+            a[mp[name1]][mp[name2]]=weight;
+            a[mp[name2]][mp[name1]]=weight;
+        }
+        FOR(k,1,n)
+        {
+            FOR(i,1,n)
+            {
+                FOR(j,1,n)
+                {
+                    a[i][j]=max(a[i][j],min(a[i][k],a[k][j]));
+                }
+            }
+        }
+        cin>>name1>>name2;
+
+        printf("Scenario #%d\n%d tons\n\n",testcase++,a[mp[name1]][mp[name2]]);
+
+
+        delete(a);
+    }
+}

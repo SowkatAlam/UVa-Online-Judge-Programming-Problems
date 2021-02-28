@@ -1,0 +1,155 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+
+#define FOR(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+#define gcd(a,b) {return a ? gcd(b%a,a) : b;}
+
+int *parent;
+
+struct data
+{
+    int u,v;
+    double w;
+    data(int u1,int v1,double w1)
+    {
+        u=u1;
+        v=v1;
+        w=w1;
+    }
+    bool operator<(const data &a)const
+    {
+        return a.w<w;
+    }
+};
+vector<double>x;
+vector<double>y;
+priority_queue<data>pq;
+
+int findparent(int n)
+{
+    if(parent[n]==n)return n;
+    else
+    {
+        return parent[n]=findparent(parent[n]);
+    }
+}
+void process(int node1,int node2)
+{
+    int u=findparent(parent[node1]);
+    int v=findparent(parent[node2]);
+    parent[v]=u;
+
+}
+
+
+void makestruct(int siz)
+{
+    FOR(i,0,siz-1)
+    {
+        for(int j=i+1;j<siz;j++)
+        {
+            double distance=sqrt(pow(abs(x[i]-x[j]),2)+pow(abs(y[i]-y[j]),2));
+
+            pq.push(data(i,j,distance));
+        }
+    }
+}
+void kruskal(int siz)
+{
+
+    double ans=0;
+    for(int i=0;i<siz;)
+    {
+        if(!pq.empty())
+        {
+           data temp=pq.top();
+
+            if(findparent(temp.u)!=findparent(temp.v))
+            {
+                ans=ans+temp.w;
+                process(temp.u,temp.v);
+                i++;
+            }
+            pq.pop();
+        }
+        else
+        {
+            break;
+        }
+
+
+    }
+    printf("%.2lf\n",ans);
+}
+int main()
+{
+    //read("incb.txt");
+    int n,m,cable1,cable2;
+    while(scanf("%d",&n)==1)
+    {
+
+
+        double xvalue,yvalue;
+        while(n--)
+        {
+            scanf("%lf%lf",&xvalue,&yvalue);
+            x.pb(xvalue);
+            y.pb(yvalue);
+        }
+        int siz=x.size();
+
+        makestruct(siz);
+        parent=new int[siz+1];
+        FOR(i,0,siz)
+        {
+            parent[i]=i;
+        }
+        scanf("%d",&m);
+        int mtemp=m;
+        while(m--)
+        {
+            scanf("%d%d",&cable1,&cable2);
+            cable1--;
+            cable2--;
+            if(findparent(cable1)==findparent(cable2))
+            {
+                mtemp--;
+            }
+
+            process(cable1,cable2);
+        }
+        kruskal(siz-1-mtemp);
+        delete(parent);
+        x.clear();
+        y.clear();
+        while(!pq.empty()){pq.pop();}
+    }
+
+}

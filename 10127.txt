@@ -1,0 +1,62 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+/*
+ua id : sowkat.alam
+gmail: sowkat.alam1@gmail.com
+
+*/
+
+int power(int n,int number)
+{
+    int ans=1;
+    int mod=10%number;
+    for(int i=1;i<=n;i++)
+    {
+        ans=(ans*mod)%number;
+    }
+    return ans;
+}
+
+int solution(int number)
+{
+    int ans=0;
+    for(int i=1;i<=number;i++)
+    {
+        ans+=power(i-1,number);
+        if(ans%number==0)
+        {
+            return i;
+            break;
+        }
+    }
+
+}
+
+int main()
+{
+    int number;
+
+    while(scanf("%d",&number)==1)
+    {
+        cout<<solution(number)<<endl;
+    }
+
+}

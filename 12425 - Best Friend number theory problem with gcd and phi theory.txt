@@ -1,0 +1,297 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define dset(x) memset(x,-1,sizeof(x))
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define read freopen("incb.txt","r",stdin)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define dv(x) cout << #x << ": " <<x << endl
+#define write freopen("outcb.txt","w",stdout)
+#define dvall(x, r)cout<<"\n";loope(i,0,r)cout<<#x<<"["<<i<<"]: "<<x[i]<<"    ";cout<<"\n";
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+
+
+#define maxx 1000040
+
+int status[(maxx/32)+2];
+vi prime;
+
+bool Check(int N,int pos){return (bool)(N & (1<<pos));}
+int Set(int N,int pos){	return N=N | (1<<pos);}
+
+void sieve()
+{
+    prime.pb(2);
+	 int i, j;
+     for( i = 3; i <=sqrt(maxx)+1; i += 2 )
+     {
+		 if( Check(status[i>>5],i&31)==0)
+		 {
+		     prime.pb(i);
+	 		 for( j = i*i; j<=maxx; j += (i<<1) )
+			 {
+				 status[j>>5]=Set(status[j>>5],j & 31)   ;
+	 		 }
+		 }
+	 }
+	 int li=sqrt(maxx)+2;
+	 if(li%2==0)
+     {
+         li++;
+     }
+	 for(int i=li;i<=maxx;i+=2)
+     {
+         if( Check(status[i>>5],i&31)==0)
+         {
+             prime.pb(i);
+         }
+     }
+}
+vector<pair<ull,ull> >v_mp;
+
+ll t;
+ll n,q;
+ll siz;
+
+ll phi(ll val)
+{
+    ll res=val;
+
+    for(int i=0;i<siz&&prime[i]*prime[i]<=val;i++)
+    {
+        if(val%prime[i]==0)
+        {
+            res/=prime[i];
+            res*=prime[i]-1;
+
+            while(val%prime[i]==0)
+            {
+                val/=prime[i];
+            }
+        }
+    }
+    if(val>1)
+    {
+        res/=val;
+        res*=val-1;
+    }
+    return res;
+}
+int main()
+{
+    //read;
+
+    sieve();
+    siz=prime.size();
+    cin>>t;
+    loope(test,1,t)
+    {
+        cin>>n>>q;
+        printf("Case %d\n",test);
+
+        for(ull i=1;i*i<=n;i++)
+        {
+
+            if(n%i==0)
+            {
+                v_mp.push_back(make_pair(i,phi(n/i)));
+                v_mp.push_back(make_pair(n/i,phi(i)));
+            }
+        }
+
+        sort(v_mp.begin(),v_mp.end());
+
+        ll sizsiz=v_mp.size();
+
+        loop(i,1,sizsiz)
+        {
+            v_mp[i].second+=v_mp[i-1].second;
+        }
+
+        while(q--)
+        {
+            ll tempnn;
+            cin>>tempnn;
+            if(tempnn<=0)
+            {
+                cout<<"0\n";
+                continue;
+            }
+            int lo=0,hi=v_mp.size()-1;
+            int pos=-1;
+
+            while(lo<=hi)
+            {
+                int mid=(lo+hi)/2;
+
+                if(v_mp[mid].first<=tempnn)
+                {
+
+                    lo=mid+1;
+                    pos=mid;
+                }
+                else
+                {
+                    hi=mid-1;
+                }
+
+            }
+            if(pos==-1)
+                {
+                    cout<<"0\n";
+                }
+            else
+                {
+                    cout<<v_mp[pos].second<<endl;
+                }
+
+
+            /*
+            if(tempn<=0)
+            {
+                cout<<0<<endl;
+                continue;
+            }
+            ull ans=0;
+            ull first=0,last=sizsiz;
+
+            while(first<=last)
+            {
+                int mid=(first+last)/2;
+                if(v_mp[mid].first==tempn)
+                {
+                    ans=v_mp[mid].second;
+                    break;
+                }
+                else if(v_mp[mid].first<tempn)
+                {
+                    first=mid+1;
+                }
+                else
+                {
+                    last=mid-1;
+                }
+            }
+            if(v_mp[first].first>tempn)
+            {
+                first--;
+            }
+            ans=v_mp[first].second;
+            cout<<v_mp[first].first<<"   "<<ans<<"  "<<v_mp[first+1].first<<"  "<<v_mp[first+1].second<<endl;
+            v_mp.clear();
+            */
+
+
+        }
+        v_mp.clear();
+    }
+}
+
+/*
+#define maxx 100002
+
+int ar[maxx];
+
+struct
+{
+    int type;
+    int number=0;
+}tree[maxx*4];
+
+int n,q,val;
+
+void initialize(int node,int l,int r)
+{
+    if(l==r)
+    {
+        tree[node].type=ar[l];
+        tree[node].number++;
+        return ;
+    }
+    else
+    {
+        int mid=(l+r)/2;
+        int left=(node*2);
+        int right=(node*2)+1;
+        initialize(left,l,mid);
+        initialize(right,mid+1,r);
+
+        if(tree[left].type==tree[right].type)
+        {
+            tree[node].type=tree[left].type;
+            tree[node].number=tree[left].number+tree[right].number;
+        }
+        else
+        {
+            if(tree[left].number>tree[right].number)
+            {
+                tree[node].type=tree[left].type;
+                tree[node].number=tree[left].number;
+            }
+            else
+            {
+                tree[node].type=tree[right].type;
+                tree[node].number=tree[right].number;
+            }
+        }
+        return ;
+    }
+}
+void update(int node,int l,int r,int r_l,int r_r)
+{
+    if(l>r_r||r<r_l)return ;
+}
+int main()
+{
+    read;
+    sci2(n,q);
+    ar[0]=-100000000;
+
+    loope(i,1,n)
+    {
+        sci(val);
+        ar[i]=val;
+    }
+    initialize(1,1,n);
+
+    for(int i=1;i<=10;i++)
+    {
+        cout<<i<<" "<<i<<"    "<<tree[i].type<<"   "<<tree[i].number<<endl;
+    }
+
+}
+*/

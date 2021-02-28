@@ -1,0 +1,153 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define INF  (int)1e9
+#define LL long long int
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define all(c) c.begin(), c.end()
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define set1(x) memset(x,-1,sizeof(x))
+#define set0(x) memset(a,0,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+#define abs(x) { return x>0 ? x : -x;}
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define setinf(x) memset(x,126,sizeof(x))
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+#define maxx 10000000
+bool flag[maxx+1]={false};
+vi v;
+int dis[160];
+
+int mystery_box_binarysearch(int i,int j,int n)
+{
+    if(i-j==0)return i;
+    if(j<i)return i;
+    else
+    {
+        int mid=(i+j)/2;
+        if(v[mid]==n)return mid;
+        else if(n<v[mid])
+        {
+            return mystery_box_binarysearch(i,mid-1,n);
+        }
+        else
+        {
+            return mystery_box_binarysearch(mid+1,j,n);
+        }
+    }
+}
+
+int main()
+{
+    //read("incb.txt");
+    v.pb(2);
+    int limit=sqrt(maxx*1.)+2;
+    for(int i=3;i<=maxx;i+=2)
+    {
+        if(flag[i]==false)
+        {
+            v.pb(i);
+            if(i<=limit)
+            {
+                for(int j=(i*i);j<=maxx;j+=(2*i))flag[j]=true;
+            }
+
+        }
+    }
+
+
+    int masx=0;
+    int test,lower,upper;
+    sci(test);
+
+
+    while(test--)
+    {
+        sci2(lower,upper);
+        int ans=0;
+        int ansindex;
+         memset(dis,0,sizeof(dis));
+        int indexlower=mystery_box_binarysearch(0,v.size()-1,lower);
+        //cout<<indexlower<<"  "<<v[indexlower]<<"  "<<lower<<"  ";
+        if(v[indexlower]<lower)indexlower++;
+        //cout<<indexlower<<endl;
+        int indexupper=mystery_box_binarysearch(0,v.size()-1,upper);
+        //cout<<indexupper<<"  "<<v[indexupper]<<"  "<<upper<<"  ";
+        if(v[indexupper]>upper)indexupper--;
+        //cout<<indexupper<<endl;
+        bool noans=false;
+        //cout<<indexlower<<"  "<<indexupper<<endl;
+        if(lower>=upper)
+        {
+            printf("No jumping champion\n");
+            continue;
+        }
+        if(indexlower>=indexupper)
+        {
+            printf("No jumping champion\n");
+            continue;
+        }
+        for(int i=indexlower;i<indexupper;i++)
+        {
+            int in=v[i+1]-v[i];
+            dis[in]++;
+            if(dis[in]>=ans)
+            {
+                if(ans==dis[in])
+                {
+                    noans=true;
+                }
+                else
+                {
+                    ans=dis[in];
+                    ansindex=in;
+                    noans=false;
+                }
+            }
+        }
+        if(noans==true)
+        {
+            printf("No jumping champion\n");
+        }
+        else
+        {
+            printf("The jumping champion is %d\n",ansindex);
+        }
+
+    }
+}

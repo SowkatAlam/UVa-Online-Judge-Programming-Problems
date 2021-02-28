@@ -1,0 +1,141 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define dset(x) memset(x,-1,sizeof(x))
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define read freopen("incb.txt","r",stdin)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define dv(x) cout << #x << ": " <<x << endl
+#define write freopen("outcb.txt","w",stdout)
+#define dvall(x, r)cout<<"\n";loope(i,0,r)cout<<#x<<"["<<i<<"]: "<<x[i]<<"    ";cout<<"\n";
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+#include <bits/stdc++.h>
+using namespace std;
+
+#define maxx 1000
+bool Check(int n,int pos){return (bool)(n&(1<<pos));}
+
+int Set(int n,int pos){return n=(n|(1<<pos));}
+int flag[((int)maxx)/32+2];
+vector<ll>vv;
+
+void seive()
+{
+    int sqrtn=sqrt((int)maxx);
+
+    for(int i=3;i<=sqrtn;i+=2)
+    {
+        if(Check(flag[i/32],i%32)==0)
+        {
+            for(int j=i*i;j<=maxx;j+=(2*i))
+            {
+                flag[j/32]=Set(flag[j/32],j%32);
+            }
+        }
+    }
+    vv.pb(1);
+    vv.pb(2);
+
+    for(int i=3;i<=maxx;i+=2)
+    {
+        if(Check(flag[i/32],i%32)==0)
+        {
+            vv.pb(i);
+        }
+    }
+}
+int nn,cc;
+
+int main()
+{
+    //read;
+    //write;
+    seive();
+    loop(i,0,vv.size())
+    {
+        //cout<<i<<"  "<<vv[i]<<endl;
+    }
+    bool first=true;
+    while(sci2(nn,cc)==2)
+    {
+        int upper=upper_bound(vv.begin(),vv.end(),nn)-vv.begin();
+        upper--;
+
+        int range;
+        if(upper%2==0)
+        {
+            range=(2*cc)-1;
+        }
+        else
+        {
+            range=(2*cc);
+        }
+
+        int left=0;
+        if(range%2==0)
+        {
+            left=(upper/2)-(cc-1);
+        }
+        else
+        {
+            left=(upper/2)-(cc-1);
+        }
+
+        /*
+        if(first)
+        {
+            first=false;
+        }
+        else
+        {
+            cout<<endl;
+        }
+        */
+        cout<<nn<<" "<<cc<<":";
+        if(left<0)left=0;
+
+        range=(left+range)-1;
+        if(range>upper)range=upper;
+       // cout<<left<<"  "<<range<<endl;
+        for(;left<=range;left++)
+        {
+            cout<<" "<<vv[left];
+        }
+        cout<<endl<<endl;
+    }
+
+
+}

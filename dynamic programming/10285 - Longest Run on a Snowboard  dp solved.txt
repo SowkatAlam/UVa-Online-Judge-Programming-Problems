@@ -1,0 +1,159 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define dset(x) memset(x,-1,sizeof(x))
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define read freopen("incb.txt","r",stdin)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define dv(x) cout << #x << ": " <<x << endl
+#define write freopen("outcb.txt","w",stdout)
+#define dvall(x)cout<<"\n";loop(i,0,x.size())cout<<#x<<"["<<i<<"]: "<<x[i]<<"    ";cout<<"\n";
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+
+
+
+
+
+/*
+#define maxx 100
+
+string a="abcdf";
+string b="acbcf";
+int dp[maxx+5][maxx+5];
+
+int lcs_top_down(int i,int j)
+{
+    if(i>=a.size()||j>=b.size())return 0;
+    else if(dp[i][j]!=-1)return dp[i][j];
+    else
+    {
+        if(a[i]==b[j])
+        {
+            return dp[i][j]=1+lcs_top_down(i+1,j+1);
+        }
+        else
+        {
+            return dp[i][j]=max(lcs_top_down(i+1,j),lcs_top_down(i,j+1));
+        }
+    }
+}
+
+
+int lcs_bottom_up()
+{
+
+}
+int main()
+{
+    memset(dp,-1,sizeof(dp));
+    cout<<lcs_top_down(0,0);
+
+    lcs_bottom_up();
+}
+*/
+
+
+#define maxx 110
+int r,c;
+int memo[maxx+5][maxx+5];
+int xx[4]={-1,1,0,0};
+int yy[4]={0,0,-1,1};
+int a[maxx+5][maxx+5];
+
+bool valid(int x,int y,int idx,int idy)
+{
+    if(x>=0&&x<r&&y>=0&&y<c)
+    {
+        if(a[idx][idy]>a[x][y])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+int magic_box(int idx,int idy)
+{
+    if(memo[idx][idy]!=-1)return memo[idx][idy];
+    else
+    {
+        int res=0;
+
+        loop(i,0,4)
+        {
+            if(valid(idx+xx[i],idy+yy[i],idx,idy))
+            {
+                res=max(res,1+magic_box(idx+xx[i],idy+yy[i]));
+            }
+        }
+        return memo[idx][idy]=res;
+    }
+}
+int main()
+{
+    //read;
+    int temp,n;
+    string name;
+    cin>>n;
+
+    loope(test,1,n)
+    {
+        dset(memo);
+        cin>>name;
+        cin>>r>>c;
+        loop(i,0,r)
+        {
+            loop(j,0,c)
+            {
+                cin>>temp;
+                a[i][j]=temp;
+            }
+        }
+        int ans=0;
+        loop(i,0,r)
+        {
+            loop(j,0,c)
+            {
+                ans=max(ans,1+magic_box(i,j));
+            }
+        }
+        cout<<name<<": "<<ans<<endl;
+    }
+
+}
+

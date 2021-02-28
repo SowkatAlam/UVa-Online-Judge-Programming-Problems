@@ -1,0 +1,105 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+int bigmod(int b,int p,int m)
+{
+    if(p==0)
+    {
+        return 1%m;
+    }
+    int x=bigmod(b,p/2,m);
+    x=(x*x)%m;
+
+    if(p%2==1)
+    {
+        x=(x*b)%m;
+    }
+
+    return x;
+}
+char s[20001];
+
+
+bool generate_ans()
+{
+    int n=strlen(s);
+    n=n-2;
+    int ans=0;
+
+    for(int i=n;i>=0;i--)
+    {
+        if(s[i]=='1')
+        {
+            ans=ans+bigmod(2,n-i,131071);
+            ans=ans%131071;
+        }
+    }
+    if(ans%131071==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+int main()
+{
+    //freopen("a.txt","r",stdin);
+    //freopen("b.txt","w",stdout);
+
+    char ch;
+
+    while(gets(s))
+    {
+
+        /*
+        int i=0;
+        while(gets(s))
+        {
+
+            cin>>ch;
+            if(ch=='0'||ch=='1'||ch=='#')
+            {
+                s[i++]=ch;
+                if(ch=='#')
+                {
+                    //s[i]='\0';
+                    break;
+                }
+            }
+        }
+        */
+        bool flag=generate_ans();
+        if(flag==true)
+        {
+            cout<<"YES"<<endl;
+        }
+        else
+        {
+            cout<<"NO"<<endl;
+        }
+
+    }
+}
+

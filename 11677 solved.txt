@@ -1,0 +1,87 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+void time_count(int H1,int M1,int H2,int M2)
+{
+    bool check=false;
+    int houre_ans=0;
+
+    while(H1!=H2)
+    {
+        H1++;
+        if(H1>23)H1=0;
+        check=true;
+        houre_ans++;
+    }
+    if(check==true)
+    {
+        if(M1>M2)
+        {
+
+            int minute_count=0;
+            while(M1!=M2)
+            {
+                minute_count++;
+                M1++;
+                if(M1>59)M1=0;
+            }
+            cout<<(--houre_ans*60)+minute_count<<endl;
+        }
+        else
+        {
+            cout<<(houre_ans*60)+(M2-M1)<<endl;
+        }
+    }
+    else
+    {
+        if(M1>M2)
+        {
+
+            int minute_count=0;
+            while(M1!=M2)
+            {
+                minute_count++;
+                M1++;
+                if(M1>59)M1=0;
+            }
+            cout<<(23*60)+minute_count<<endl;
+        }
+        else
+        {
+            cout<<(M2-M1)<<endl;
+        }
+    }
+}
+
+int main()
+{
+   //freopen("incb.txt","r",stdin);
+    int H1,M1,H2,M2;
+    while(cin>>H1>>M1>>H2>>M2)
+    {
+        if(H1==0&&M1==0&&H2==0&&M2==0)
+        {
+            break;
+        }
+        time_count(H1,M1,H2,M2);
+    }
+}
+
+

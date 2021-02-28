@@ -1,0 +1,127 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+
+#define FOR(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+#define gcd(a,b) {return a ? gcd(b%a,a) : b;}
+
+string s[251];
+string temptemp;
+
+void process(int i,int identifier)
+{
+    string temp2;
+
+    string temp1;
+
+    if(identifier==0)
+    {
+        temp2=s[i];
+        temp1=s[i];
+    }
+    if(identifier==1)
+    {
+        temp2=temptemp;
+        temp1=s[i];
+    }
+    char anstemp2[700];
+    int index=0;
+    int sizeoftemp2=temp2.size()-1;
+    int sizeoftemp1=temp1.size()-1;
+    int minsize=min(sizeoftemp1,sizeoftemp2);
+    int maxsize=max(sizeoftemp1,sizeoftemp2);
+    int temp=0;
+    FOR(i,0,minsize)
+    {
+
+        temp+=(temp2[i]-48)+(temp1[i]-48);
+        //cout<<(temp%10)+48<<endl;
+        anstemp2[index++]=(temp%10)+48;
+        temp/=10;
+    }
+    if(sizeoftemp1>sizeoftemp2)
+    {
+        FOR(i,minsize+1,maxsize)
+        {
+            temp+=(temp1[i]-48);
+            anstemp2[index++]=(temp%10)+48;
+            temp/=10;
+        }
+    }
+    if(sizeoftemp2>sizeoftemp1)
+    {
+        FOR(i,minsize+1,maxsize)
+        {
+            temp+=(temp2[i]-48);
+            anstemp2[index++]=(temp%10)+48;
+            temp/=10;
+        }
+    }
+    while(temp>=1)
+    {
+        anstemp2[index++]=(temp%10)+48;
+        temp/=10;
+    }
+    anstemp2[index]='\0';
+    temptemp=anstemp2;
+    if(identifier==0)
+    {
+        temptemp=anstemp2;
+    }
+    if(identifier==1)
+    {
+        s[i+1]=anstemp2;
+    }
+}
+
+int main()
+{
+    //read("incb.txt");
+    //write("outcb.txt");
+    s[0]="1";
+    s[1]="1";
+    s[2]="3";
+    s[3]="5";
+
+    for(int i=4;i<251;i++)
+    {
+        process(i-2,0);
+        process(i-1,1);
+    }
+    int n;
+    while(scanf("%d",&n)==1)
+    {
+        REVFOR(i,sz(s[n])-1,0)
+        {
+            printf("%c",s[n][i]);
+        }
+        printf("\n");
+    }
+
+}

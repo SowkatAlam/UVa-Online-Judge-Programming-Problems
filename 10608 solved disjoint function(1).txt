@@ -1,0 +1,145 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+int *people,*cost;
+int max_ans;
+vector<int>child[30001];
+int parent(int node)
+{
+    if(people[node]==node)return node;
+    else
+        return people[node];
+}
+void anotherprocess(int parentofu,int parentofv)
+{
+    for(int i=0;i<child[parentofv].size();i++)
+    {
+        child[parentofu].push_back(child[parentofv][i]);
+        people[child[parentofv][i]]=parentofu;
+    }
+    child[parentofv].clear();
+}
+void process(int u,int v)
+{
+    int parentofu=parent(u);
+    int parentofv=parent(v);
+    if(parentofu==parentofv)
+    {
+        if(cost[parentofu]>max_ans)max_ans=cost[parentofu];
+        return ;
+    }
+    else
+    {
+        if(cost[parentofu]==cost[parentofv])
+        {
+            people[parentofv]=parentofu;
+            cost[parentofu]+=cost[parentofv];
+            child[parentofu].push_back(parentofv);
+            anotherprocess(parentofu,parentofv);
+            if(cost[parentofu]>max_ans)max_ans=cost[parentofu];
+        }
+        else if(cost[parentofu]>cost[parentofv])
+        {
+            people[parentofv]=parentofu;
+            cost[parentofu]+=cost[parentofv];
+            child[parentofu].push_back(parentofv);
+            anotherprocess(parentofu,parentofv);
+            if(cost[parentofu]>max_ans)max_ans=cost[parentofu];
+        }
+        else
+        {
+            people[parentofu]=parentofv;
+            cost[parentofv]+=cost[parentofu];
+            child[parentofv].push_back(parentofu);
+            anotherprocess(parentofv,parentofu);
+            if(cost[parentofv]>max_ans)max_ans=cost[parentofv];
+        }
+    }
+}
+int main()
+{
+   // freopen("incb.txt","r",stdin);
+    /*
+    int N,M,friend1,friend2,testcase;
+    cin>>testcase;
+    for(int i=1;i<=testcase;i++)
+    {
+        if(i==24)
+        {
+            cin>>N>>M;
+            cout<<N<<"  "<<M<<endl;
+            while(M--)
+            {
+                cin>>friend1>>friend2;
+                cout<<friend1<<"  "<<friend2<<endl;
+            }
+            break;
+        }
+        cin>>N>>M;
+        while(M--)
+            {
+                cin>>friend1>>friend2;
+                //process(friend1,friend2);
+            }
+    }
+
+    return 0;
+    */
+
+    int N,M,friend1,friend2,testcase;
+    cin>>testcase;
+    while(testcase--)
+    {
+            cin>>N>>M;
+            people=new int[N+1];
+            cost=new int[N+1];
+
+            for(int i=0;i<=N;i++)
+            {
+                people[i]=i;
+                cost[i]=1;
+            }
+
+
+            max_ans=0;
+            while(M--)
+            {
+                cin>>friend1>>friend2;
+                process(friend1,friend2);
+            }
+            cout<<max_ans<<endl;
+            for(int i=0;i<30001;i++)
+            {
+                child[i].clear();
+            }
+            delete(people);
+            delete(cost);
+
+    }
+
+
+}
+/*
+for(int i=0;i<=N;i++)
+    {
+        cout<<people[i]<<"  "<<cost[i]<<endl;
+
+    }
+    */
