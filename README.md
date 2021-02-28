@@ -1,1 +1,1 @@
-# UVa-Online-Judge-Programming-Problems
+Some UVa online judge programming problems' solutions that I solved earlier. Here, you can find solutions to programming problems on Data Structures, Number Theory, Computational Geometry, Graph, and Dynamic Programming. I would encourage you not to copy the whole answer. Instead, you can use it if you get stuck and want to find out an approach to solve a particular problem.
