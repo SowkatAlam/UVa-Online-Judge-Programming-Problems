@@ -1,0 +1,97 @@
+
+
+
+
+
+
+
+
+
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+
+double temp;
+double round_my_own(double a)
+{
+    a=a*100;
+    a=floor(a);
+    a=a/100;
+    return a;
+}
+double round_my_own_floor(double a)
+{
+    a=a*100;
+    a=ceil(a);
+    a=a/100;
+    return a;
+}
+
+
+
+
+vector<double>v;
+
+int main()
+{
+    double n;
+    double dollar,total,total_1,ans;
+
+    while(cin>>n)
+    {
+        temp=0;
+        total=0;
+        ans=0;
+        if(n==0)
+        {
+            break;
+        }
+        for(int i=0;i<n;i++)
+        {
+            cin>>dollar;
+            v.push_back(dollar);
+            total+=dollar;
+        }
+        total=total/n;
+        total_1=total;
+        total=round_my_own(total);
+        total_1=round_my_own_floor(total_1);
+        sort(v.begin(),v.end());
+        int i=0;
+        while(v[i]<=total)
+        {
+            ans=ans+(total-v[i]);
+
+            i++;
+        }
+        reverse(v.begin(),v.end());
+        i=0;
+        while(v[i]>=total_1)
+        {
+            ans=ans+(v[i]-total_1);
+            i++;
+        }
+        cout<<ans<<endl;
+        printf("$%.2f\n",ans/2);
+        v.clear();
+    }
+}
+

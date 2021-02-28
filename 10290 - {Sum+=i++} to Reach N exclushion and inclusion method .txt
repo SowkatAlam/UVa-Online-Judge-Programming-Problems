@@ -1,0 +1,134 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define dset(x) memset(x,-1,sizeof(x))
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define read freopen("incb.txt","r",stdin)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define dv(x) cout << #x << ": " <<x << endl
+#define write freopen("outcb.txt","w",stdout)
+#define dvall(x, r)cout<<"\n";loope(i,0,r)cout<<#x<<"["<<i<<"]: "<<x[i]<<"    ";cout<<"\n";
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+
+#define maxx 1000000
+int status[(maxx/32)+2];
+vi prime;
+bool Check(int N,int pos){return (bool)(N & (1<<pos));}
+int Set(int N,int pos){	return N=N | (1<<pos);}
+
+void sieve()
+{
+    prime.pb(2);
+	 int i, j;
+     for( i = 3; i <=sqrt(maxx)+1; i += 2 )
+     {
+		 if( Check(status[i>>5],i&31)==0)
+		 {
+		     prime.pb(i);
+	 		 for( j = i*i; j<=maxx; j += (i<<1) )
+			 {
+				 status[j>>5]=Set(status[j>>5],j & 31)   ;
+	 		 }
+		 }
+	 }
+	 int li=sqrt(maxx)+2;
+	 if(li%2==0)
+     {
+         li++;
+     }
+	 for(int i=li;i<=maxx;i+=2)
+     {
+         if( Check(status[i>>5],i&31)==0)
+         {
+             prime.pb(i);
+         }
+     }
+}
+ll siz;
+ll n;
+void magic_box()
+{
+    ll ans=1;
+    ll tempn=n;
+    for(int i=0;i<siz&&prime[i]*prime[i]<=tempn;i++)
+    {
+        if(n<=1)break;
+        if(n%prime[i]==0)
+        {
+            ll temp=0;
+            if(prime[i]==2)
+            {
+                while(n%prime[i]==0)
+                {
+                    n/=prime[i];
+                }
+            }
+            else
+            {
+                while(n%prime[i]==0)
+                {
+                    temp++;
+                    n/=prime[i];
+                }
+            }
+            ans*=(temp+1);
+        }
+    }
+
+    if(n>1)
+    {
+        ans*=(2);
+    }
+    cout<<ans<<endl;
+}
+int main()
+{
+    //read;
+    sieve();
+    siz=prime.size();
+    while(scanf("%lld",&n)==1)
+    {
+        if(n==0)
+        {
+            cout<<0<<endl;
+        }
+        else
+        {
+            magic_box();
+        }
+    }
+}

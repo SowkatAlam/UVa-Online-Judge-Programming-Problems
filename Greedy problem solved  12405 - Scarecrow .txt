@@ -1,0 +1,88 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define dset(x) memset(x,-1,sizeof(x))
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define read freopen("incb.txt","r",stdin)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define dv(x) cout << #x << ": " <<x << endl
+#define write freopen("outcb.txt","w",stdout)
+#define dvall(x, r)cout<<"\n";loope(i,0,r)cout<<#x<<"["<<i<<"]: "<<x[i]<<"    ";cout<<"\n";
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+int n;
+string s;
+void magic_box(int t)
+{
+    int ans=0;
+    int len=0;
+    bool flag=false;
+    bool taken=false;
+    loop(i,0,s.size())
+    {
+        if(s[i]=='.')
+        {
+            flag=true;
+        }
+        if(flag==true)
+        {
+            len++;
+        }
+        if(len==3)
+        {
+            ans++;
+            len=0;
+            flag=false;
+        }
+    }
+    if(flag==true&&len<3)
+    {
+        ans++;
+    }
+    printf("Case %d: %d\n",t,ans);
+}
+int main()
+{
+    //read;
+    //write;
+    int t;
+    cin>>t;
+    loope(i,1,t)
+    {
+        cin>>n>>s;
+        magic_box(i);
+    }
+
+}

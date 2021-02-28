@@ -1,0 +1,105 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+vector<char>f;
+int top_f;
+int main()
+{
+    int T;
+    char c[200];
+    cin>>T;
+	bool check;
+    int i=0;
+    gets(c);
+    
+	while(T--)
+	{
+		check=true;
+		i=0;
+		top_f=-1;
+		gets(c);
+		while(c[i]!='\0')
+		{
+			if(c[i]=='('||c[i]=='[')
+			{
+				top_f++;
+				 f.push_back(c[i]);
+            
+			}
+			else
+			{
+				if(f.empty()==true)
+					{
+						check=false;
+						break;
+					}
+				if(c[i]==')'&&f[top_f]=='(')
+				{
+					f.pop_back();
+                    top_f--;
+				}
+				else
+				{
+					
+					if(c[i]==']'&&f[top_f]=='[')
+				{
+                    f.pop_back();
+                    top_f--;
+
+            }
+
+            }
+
+
+				}
+				i++;
+			}
+				if(f.empty()==true&&check==true)
+			{
+				cout<<"Yes"<<endl;
+			}
+				else
+			{
+				cout<<"No"<<endl;
+			}
+			f.clear();
+
+	}
+    
+}
+
+
+
+
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+
+
+

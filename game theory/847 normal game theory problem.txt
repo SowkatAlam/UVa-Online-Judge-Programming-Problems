@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+long long int nmax;
+
+long long int magic_box(long long int n)
+{
+    if(n>=nmax)return 0;
+    return 0|!magic_box(n*2)|!magic_box(n*9);
+}
+
+int main()
+{
+    for(int i=1;i<=200;i++)
+    {
+        cout<<i<<"    ";
+        nmax=i;
+        if(magic_box(1))
+        {
+            printf("Stan wins.\n");
+  //          Stan wins.
+            //Ollie wins.
+//Stan wins.
+        }
+        else
+        {
+            printf("Ollie wins.\n");
+        }
+    }
+
+
+}

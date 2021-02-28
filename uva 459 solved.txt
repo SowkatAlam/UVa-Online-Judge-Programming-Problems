@@ -1,0 +1,96 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+
+
+
+int element;
+
+int *par;
+
+int makeset(int n)
+{
+	par[n]=n;
+	return 0;
+}
+int findRepresentative(int n)
+{
+	if(par[n]==n)
+	{
+		return n;
+	}
+	return findRepresentative(par[n]);
+}
+int MakeFriend(int m,int n)
+{
+	
+	int u=findRepresentative(m); 
+	int v=findRepresentative(n); 
+	if(u!=v)
+	{
+		par[u]=findRepresentative(v);
+	}
+	return 0;
+}
+int main()
+{
+	//freopen("in.txt","r",stdin);
+	int testcase;
+	char c[100];
+	string firstchar;
+	string s;
+	scanf("%d",&testcase);
+	while(testcase--)
+	{
+		cin>>firstchar;
+		
+
+		element=firstchar[0]-64;
+		par=new int[element+1];
+
+		for(int i=1;i<=element;i++)
+		{
+			makeset(i);
+		}
+		cin.ignore();
+		while(true)
+		{
+			 if(!getline(cin,s) || s.empty()) break;
+			MakeFriend(s[0]-64,s[1]-64);
+		} 
+		set<int>s;
+		for(int i=1;i<=element;i++)
+		{
+			s.insert(findRepresentative(i));
+		}
+		if(testcase==0)
+		{
+			printf("%d\n",s.size());
+		}
+		else
+		{
+			printf("%d\n\n",s.size());
+		}
+		
+		
+	}
+	
+}

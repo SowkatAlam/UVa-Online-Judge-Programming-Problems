@@ -1,0 +1,198 @@
+
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+#define endl '\n'
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+
+#define FOR(xxxxx,aaaaa,nnnnn) for(int xxxxx=aaaaa;xxxxx<=nnnnn;xxxxx++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+
+#define infinity 1000000
+
+int **ygraph;
+int **mgraph;
+int n;
+int current_index;
+
+void process(char city1,char city2)
+{
+    FOR(k,1,current_index)
+    {
+        FOR(i,1,current_index)
+        {
+            FOR(j,1,current_index)
+            {
+                ygraph[i][j]=min(ygraph[i][j],ygraph[i][k]+ygraph[k][j]);
+                mgraph[i][j]=min(mgraph[i][j],mgraph[i][k]+mgraph[k][j]);
+            }
+        }
+    }
+}
+
+int main()
+{
+    //read("incb.txt");
+   // write("outcb.txt");
+    char ym,ub,city1,city2;
+    int dist;
+    while(cin>>n)
+    {
+        if(n==0)break;
+        current_index=0;
+        map<char,int>mpp;
+        map<int,char>mppint;
+        ygraph=new int*[30];
+        mgraph=new int*[30];
+        FOR(i,0,27)
+        {
+            ygraph[i]=new int[30];
+            mgraph[i]=new int[30];
+
+            FOR(j,0,27)
+            {
+                if(i==j)
+                {
+                    ygraph[i][i]=0;
+                    mgraph[i][i]=0;
+                }
+                else
+                {
+                    ygraph[i][j]=infinity;
+                    mgraph[i][j]=infinity;
+                }
+            }
+        }
+        int tempn=n;
+
+        while(tempn--)
+        {
+            cin>>ym>>ub>>city1>>city2>>dist;
+                if(mpp[city1]==0)
+                {
+                    mpp[city1]=++current_index;
+                    mppint[current_index]=city1;
+                }
+                if(mpp[city2]==0)
+                {
+                    mpp[city2]=++current_index;
+                    mppint[current_index]=city2;
+                }
+                if(ym=='Y')
+                {
+                    if(ub=='U')
+                    {
+                        if(ygraph[mpp[city1]][mpp[city2]]>dist)
+                        {
+                            ygraph[mpp[city1]][mpp[city2]]=dist;
+                        }
+                    }
+                    else
+                    {
+                        if(ygraph[mpp[city1]][mpp[city2]]>dist&&ygraph[mpp[city2]][mpp[city1]]>dist)
+                        {
+
+                            ygraph[mpp[city1]][mpp[city2]]=dist;
+                            ygraph[mpp[city2]][mpp[city1]]=dist;
+                        }
+                    }
+                }
+                if(ym=='M')
+                {
+                    if(ub=='U')
+                    {
+                        if(mgraph[mpp[city1]][mpp[city2]]>dist)
+                        {
+                            mgraph[mpp[city1]][mpp[city2]]=dist;
+                        }
+
+                    }
+                    else
+                    {
+                        if(mgraph[mpp[city1]][mpp[city2]]>dist&&mgraph[mpp[city2]][mpp[city1]]>dist)
+                        {
+                            mgraph[mpp[city1]][mpp[city2]]=dist;
+                            mgraph[mpp[city2]][mpp[city1]]=dist;
+                        }
+                    }
+                }
+        }
+        cin>>city1>>city2;
+
+        if(mpp[city1]==0||mpp[city2]==0)
+        {
+            if(city1==city2)
+            {
+                printf("0 %c\n",city1);
+                continue;
+            }
+            printf("You will never meet.\n");
+            continue;
+        }
+        process(city1,city2);
+
+
+        int minans=infinity;
+        vector<char>ans;
+
+        FOR(i,1,current_index)
+        {
+            if(ygraph[mpp[city1]][i]+mgraph[mpp[city2]][i]==minans)
+            {
+                ans.push_back(mppint[i]);
+            }
+            if(ygraph[mpp[city1]][i]+mgraph[mpp[city2]][i]<minans)
+            {
+                ans.clear();
+                minans=ygraph[mpp[city1]][i]+mgraph[mpp[city2]][i];
+                ans.push_back(mppint[i]);
+            }
+
+        }
+
+        if(minans==infinity)
+        {
+            printf("You will never meet.\n");
+        }
+        else
+        {
+            sort(ans.begin(),ans.end());
+            printf("%d",minans);
+            for(int i=0;i<(int)ans.size();i++)
+            {
+                printf(" %c",ans[i]);
+            }
+            printf("\n");
+        }
+        delete(ygraph);
+        delete(mgraph);
+    }
+}

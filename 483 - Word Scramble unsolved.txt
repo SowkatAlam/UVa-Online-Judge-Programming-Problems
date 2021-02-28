@@ -1,0 +1,67 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+char c[1000];
+char ch;
+void print_rev()
+{
+    int i=0;
+    int j;
+    int l;
+    l=strlen(c);
+    while(i<l)
+    {
+        if((c[i]>=65&&c[i]<=90)||(c[i]>=97&&c[i]<=122))
+        {
+            j=i;
+            while(c[j]!=' '&&j<l)
+            {
+                j++;
+            }
+            int m=i;
+            for(int k=j-1;k>(j-i)/2;k--)
+            {
+                ch=c[k];
+                c[k]=c[m];
+                c[m]=ch;
+            }
+
+            i=j;
+        }
+        else
+        {
+
+        }
+        i++;
+    }
+}
+
+int main()
+{
+
+
+    while(gets(c))
+    {
+        print_rev();
+        puts(c);
+    }
+
+}

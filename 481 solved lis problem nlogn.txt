@@ -1,0 +1,112 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define write(x) freopen(x,"w",stdout)
+#define dset(x) memset(x,-1,sizeof(x))
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+const int inf = 2000000000; // a large value as infinity
+
+int n; // the number of items in the sequence
+vector<int>x; // the sequence of integers
+
+
+void takeInput() {
+    int value;
+    while(cin>>value)
+    {
+        x.push_back(value);
+    }
+    n=x.size();
+}
+void lis()
+{
+    int parent[n+1];
+    int increasingsub[n+1];
+    int length=0;
+
+    loop(i,0,n)
+    {
+        int low=1;
+        int height=length;
+
+        while(low<=height)
+        {
+            int mid=(int)ceil((low+height)/2);
+            if(x[increasingsub[mid]]<x[i])
+            {
+                low=mid+1;
+            }
+            else
+            {
+                height=mid-1;
+            }
+        }
+        int pos=low;
+        parent[i]=increasingsub[pos-1];
+        increasingsub[pos]=i;
+        if(pos>length)length=pos;
+    }
+    cout<<length<<"\n-"<<endl;
+    int k=increasingsub[length];
+    int temp[length];
+    int mm=0;
+    for(int j=length-1;j>=0;j--)
+    {
+        temp[mm++]=x[k];
+        k=parent[k];
+    }
+    for(int p=mm-1;p>=0;p--)
+    {
+        cout<<temp[p]<<endl;
+    }
+}
+int main() {
+    //read("incb.txt");
+    //write("outcb.txt");
+    takeInput();
+    lis();
+    return 0;
+}

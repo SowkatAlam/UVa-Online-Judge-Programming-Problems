@@ -1,0 +1,159 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+#define sci(x) scanf("%d",&x)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+
+#define scd(x) scanf("%lf",&x)
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+
+#define scc(x) scanf("%c",&x)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define INF  (int)1e9
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define set0(x) memset(a,0,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+#define abs(x) { return x>0 ? x : -x;}
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define TRvii(x) for(vii::iterator it=x.begin();it!=x.end();it++ )
+
+int main()
+{
+    //read("incb.txt");
+    //write("outcb.txt");
+    int n,check,x;
+    bool bools,boolq,boolpq,boolimp;
+    while(scanf("%d",&n)==1)
+    {
+        bools=boolq=boolpq=boolimp=true;
+        stack<int>s;
+        queue<int>q;
+        priority_queue<int>pq;
+        while(n--)
+        {
+            sci2(check,x);
+            if(check==1)
+            {
+
+                s.push(x);
+                q.push(x);
+                pq.push(x);
+            }
+            if(check==2)
+            {
+                if(!s.empty())
+                {
+                    if(s.top()!=x)
+                    {
+                        bools=false;
+
+                    }
+                    if(q.front()!=x)
+                    {
+                        boolq=false;
+                    }
+                    if(pq.top()!=x)
+                    {
+                        boolpq=false;
+
+                    }
+                    s.pop();
+                    q.pop();
+                    pq.pop();
+                }
+                else
+                {
+                    boolimp=false;
+                }
+            }
+        }
+
+        if(boolimp==false||(bools==false&&boolq==false&&boolpq==false))
+        {
+            printf("impossible\n");
+            continue;
+        }
+        if(bools==true)
+        {
+            if(boolq==true||boolpq==true)
+            {
+                printf("not sure\n");
+            }
+            else
+            {
+                printf("stack\n");
+            }
+            continue;
+        }
+        if(boolq==true)
+        {
+            if(bools==true||boolpq==true)
+            {
+                printf("not sure\n");
+            }
+            else
+            {
+                printf("queue\n");
+            }
+            continue;
+        }
+        if(boolpq==true)
+        {
+            if(bools==true||boolq==true)
+            {
+                printf("not sure\n");
+            }
+            else
+            {
+                printf("priority queue\n");
+            }
+            continue;
+        }
+
+    }
+}

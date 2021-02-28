@@ -1,0 +1,98 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+#include <bits/stdc++.h>
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+
+#define FOR(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+
+int main()
+{
+    //read("incb.txt");
+    double h,u,d,fatigfactor;
+    while(scanf("%lf%lf%lf%lf",&h,&u,&d,&fatigfactor)==4)
+    {
+        if(h==0)break;
+        double percentage=(u*fatigfactor)/(100.00);
+        int day=1;
+        double height=u;
+        if(height>h)
+        {
+            printf("success on day %d\n",day);
+            continue;
+        }
+        height=height-d;
+        double tempheight=u;
+        while(true)
+        {
+            if(height<0)
+            {
+                printf("failure on day %d\n",day);
+                break;
+            }
+            else
+            {
+                day++;
+                if(tempheight-percentage<0)
+                {
+                    tempheight=0;
+                }
+                else
+                {
+                    tempheight-=percentage;
+                }
+                height=height+tempheight;
+                if(height>h)
+                {
+                    printf("success on day %d\n",day);
+                    break;
+                }
+                height=height-d;
+            }
+        }
+    }
+
+
+}

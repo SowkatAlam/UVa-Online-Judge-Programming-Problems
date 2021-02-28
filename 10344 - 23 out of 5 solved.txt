@@ -1,0 +1,106 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+typedef vector<int>vi;
+
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define dset(x) memset(x,-1,sizeof(x))
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define read freopen("incb.txt","r",stdin)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define dv(x) cout << #x << ": " <<x << endl
+#define write freopen("outcb.txt","w",stdout)
+#define dvall(x)cout<<"\n";loop(i,0,x.size())cout<<#x<<"["<<i<<"]: "<<x[i]<<"    ";cout<<"\n";
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+
+
+int ar[5];
+
+bool flag;
+bool magic_box(int index,int sum)
+{
+    if(index==5)
+    {
+        if(sum==23)
+        {
+            return true;
+        }
+        return false;
+    }
+    else
+    {
+        return magic_box(index+1,sum+ar[index])||magic_box(index+1,sum-ar[index])||magic_box(index+1,sum*ar[index]);
+    }
+}
+void permutation_generate()
+{
+    do
+    {
+
+        if(magic_box(1,ar[0]))
+        {
+            flag=true;
+        }
+    }while(next_permutation(ar,ar+5));
+}
+int main()
+{
+    //read;
+    while(scanf("%d%d%d%d%d",&ar[0],&ar[1],&ar[2],&ar[3],&ar[4])==5)
+    {
+        if(ar[0]==0&&ar[1]==0&&ar[2]==0&&ar[3]==0&&ar[4]==0)
+        {
+            break;
+        }
+        flag=false;
+        sort(ar,ar+5);
+    permutation_generate();
+    if(flag==false)
+    {
+        printf("Impossible\n");
+    }
+    else
+    {
+        printf("Possible\n");
+    }
+    }
+
+}
+
+
+
+

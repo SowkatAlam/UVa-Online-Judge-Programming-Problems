@@ -1,0 +1,94 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define read freopen("incb.txt","r",stdin)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define write freopen("outcb.txt","w",stdout)
+#define dset(x) memset(x,-1,sizeof(x))
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+int n,maxl,value;
+vector<int>stick;
+ll dp[60][60];
+ll magic_box(int i,int j)
+{
+    if(i+1>=j)return 0;
+    else if(dp[i][j]!=-1)return dp[i][j];
+    else
+    {
+        ll res=1000000000;
+        loope(k,i+1,j-1)
+        {
+            ll temp=(stick[j]-stick[i])+magic_box(i,k)+magic_box(k,j);
+            res=min(res,temp);
+        }
+        return dp[i][j]=res;
+    }
+}
+int main()
+{
+    //read;
+    while(cin>>maxl)
+    {
+        if(maxl==0)break;
+        cin>>n;
+        stick.pb(0);
+        dset(dp);
+        loope(i,1,n)
+        {
+            sci(value);
+            stick.pb(value);
+        }
+        stick.pb(maxl);
+        sort(stick.begin(),stick.end());
+        printf("The minimum cutting is %lld.\n",magic_box(0,n+1));
+        stick.clear();
+    }
+}

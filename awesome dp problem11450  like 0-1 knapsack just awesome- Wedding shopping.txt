@@ -1,0 +1,170 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define read freopen("incb.txt","r",stdin)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define write freopen("outcb.txt","w",stdout)
+#define dset(x) memset(x,-1,sizeof(x))
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+int total_taka,total_germants;
+
+vector<int>germants[25];
+vector<int>germants_size;
+bool invalid=false;
+
+ll dp[25][204];
+
+int ans_ans;
+
+ll magic_box(int index,int sum)
+{
+    if(index>=total_germants)
+    {
+        if(sum<=total_taka&&sum>=ans_ans)
+        {
+
+            ans_ans=sum;
+        }
+        return 0;
+    }
+    else if(sum>total_taka)return 0;
+    else if(dp[index][sum]!=-1)return 0;
+    else
+    {
+        //ll res=0;
+        loop(in,0,germants_size[index])
+        {
+            magic_box(index+1,sum+germants[index][in]);
+            //magic_box(index+1,sum);
+        }
+        return dp[index][sum]=0;
+        /*
+        if(flag==true)
+        {
+            return dp[index][sum]=res;
+        }
+        else
+        {
+            invalid=true;
+            return dp[index][sum]=0;
+        }
+        */
+    }
+}
+int main()
+{
+    //read;
+    //write;
+    int t;
+    sci(t);
+    int check=0;
+    while(t--)
+    {
+        invalid=false;
+        check++;
+        ans_ans=0;
+        int index=0;
+        dset(dp);
+        int value,value_temp;
+        sci2(total_taka,total_germants);
+        loope(i,1,total_germants)
+        {
+            sci(value);
+            germants_size.pb(value);
+            loope(j,1,value)
+            {
+                sci(value_temp);
+                germants[index].pb(value_temp);
+            }
+            index++;
+        }
+
+        /*
+        if(check==10||check==38||check==73)
+        {
+            magic_box(0,0);
+            cout<<ans_ans<<endl;
+
+            cout<<total_taka<<"  "<<total_germants<<endl;
+
+            loop(mm,0,germants_size.size())
+            {
+                loop(nn,0,germants[mm].size())
+                {
+                    cout<<germants[mm][nn]<<"  ";
+                }
+                cout<<endl;
+            }
+
+            cout<<"\n\n\n\n";
+
+        }
+        */
+        magic_box(0,0);
+
+
+        if(ans_ans>0)
+        {
+            cout<<ans_ans<<endl;
+        }
+        else
+        {
+            printf("no solution\n");
+
+        }
+
+        loop(j,0,25)
+        {
+            germants[j].clear();
+        }
+        germants_size.clear();
+    }
+}

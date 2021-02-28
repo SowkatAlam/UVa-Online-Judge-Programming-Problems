@@ -1,0 +1,91 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+
+#include <iostream>
+#include<cstdio>
+using namespace std;
+#define sci(x) scanf("%d",&x)
+#define read(x) freopen(x,"r",stdin)
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+
+#define maxx 1000000
+bool flag[maxx+1]={false};
+int mu[maxx+1]={0};
+int MU[maxx+1];
+bool zeroconfirmd[maxx+1]={false};
+int oddeven[maxx+1]={0};
+void seive()
+{
+    for(int i=2;i<=maxx;i++)
+    {
+        if(flag[i]==false)
+        {
+            mu[i]=-1;
+            int sqr=i*i;
+                for(int j=(2*i);j<=maxx;j+=i)
+                {
+                    if(zeroconfirmd[j]==false)
+                    {
+                        if(j%sqr==0)
+                        {
+                            zeroconfirmd[j]=true;
+                            mu[j]=0;
+                        }
+                        else
+                        {
+                            oddeven[j]++;
+                        }
+                        flag[j]=true;
+                    }
+                    else
+                    {
+                        flag[j]=true;
+                    }
+
+                }
+
+
+        }
+    }
+
+}
+int main()
+{
+    seive();
+    MU[1]=1;
+    mu[1]=1;
+    loope(i,2,maxx)
+    {
+        if(zeroconfirmd[i]==false)
+        {
+            if(flag[i]==true)
+            {
+                if(oddeven[i]%2==0)
+                            {
+                                mu[i]=1;
+                            }
+                            else
+                            {
+                                mu[i]=-1;
+                            }
+            }
+
+        }
+        MU[i]=MU[i-1]+mu[i];
+    }
+    int n;
+    while(sci(n)==1&&n)
+    {
+        printf("%8d%8d%8d\n",n,mu[n],MU[n]);
+    }
+}

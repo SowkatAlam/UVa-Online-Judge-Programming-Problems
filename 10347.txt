@@ -1,0 +1,70 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+vector<int>v;
+int GCD(int a,int b)
+{
+    if(b==0)return a;
+    if(a%b==0)return b;
+    return GCD(b,a%b);
+}
+
+
+int main()
+{
+    
+    int T,gcd=1,temp_gcd,value;
+    cin>>T;
+    char ch;
+    string input;
+    while(T--)
+    {
+
+        while (true)
+		{
+			cin>>value;
+			v.push_back(value);
+
+			while ((ch = getchar()) == ' ');
+			ungetc(ch, stdin);
+			if (ch == 10 || ch == -1)
+                break;
+		}
+
+
+        sort(v.begin(),v.end());
+        int n=v.size();
+        for(int i=0;i<n-1;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                temp_gcd=GCD(v[j],v[i]);
+                if(gcd<temp_gcd)
+                {
+                    gcd=temp_gcd;
+                }
+            }
+        }
+        cout<<gcd<<endl;
+        v.clear();
+        gcd=1;
+    }
+}

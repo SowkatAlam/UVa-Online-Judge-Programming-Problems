@@ -1,0 +1,76 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack> 
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+//problem no 10130
+
+vector<int>price;
+vector<int>weight;
+
+int mw,n;
+int dp[1002][101]={0};
+
+int dynamic(int i,int w)
+{
+	if(i==n)return 0;
+	if(dp[i][w]!=0)return dp[i][w];
+	int profit1,profit2;
+	if(w-weight[i]>=0)
+	{
+		profit1=price[i]+dynamic(i+1,w-weight[i]);
+	}
+	else
+	{
+		profit1=0;
+	}
+	profit2=dynamic(i+1,w);
+	return dp[i][w]=max(profit1,profit2);
+	
+}
+
+int main()
+{
+	//freopen("in.txt","r",stdin);
+	int t,g,ans,value1,value2;
+	scanf("%d",&t);
+	while (t--)
+	{
+		for(int i=0;i<1001;i++)
+		{
+			for(int j=0;j<101;j++)dp[i][j]=0;
+		}
+		ans=0;
+		scanf("%d",&n);
+		for(int i=0;i<n;i++)
+		{
+			scanf("%d%d",&value1,&value2);
+			price.push_back(value1);
+			weight.push_back(value2);
+		}
+		scanf("%d",&g);
+		while(g--)
+		{
+			scanf("%d",&mw);
+			ans=ans+dynamic(0,mw);
+		}
+		cout<<ans<<endl;
+		price.clear();
+		weight.clear();
+	}
+}

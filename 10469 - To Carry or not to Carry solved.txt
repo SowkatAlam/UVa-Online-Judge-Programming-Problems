@@ -1,0 +1,114 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+#define LL unsigned long long
+
+#define clearr(x) memset(x,0,sizeof(x))
+
+int first_bit[32]={0};
+int index1=-1;
+int index2=-1;
+int second_bit[32]={0};
+int ans[32]={0};
+int ans_index=-1;
+void operation()
+{
+	
+	int index=min(index1,index2);
+	
+	for(int i=0;i<=index;i++)
+	{
+		if(first_bit[i]==1&&second_bit[i]==1)
+		{
+			ans[++ans_index]=0;
+		}
+		else
+		{
+			ans[++ans_index]=first_bit[i]+second_bit[i];
+		}
+		
+	}
+	index=max(index1,index2);
+	for(int i=ans_index+1;i<=index;i++)
+	{
+		ans[++ans_index]=first_bit[i]+second_bit[i];
+	}
+}
+void convert_ans_show()
+{
+	LL main_ans=0;
+	for(int i=0;i<=ans_index;i++)
+	{
+		main_ans=main_ans+(ans[i]*pow(2,i));
+	}
+	printf("%lld\n",main_ans);
+}
+void clear()
+{
+	index1=-1;
+	index2=-1;
+	ans_index=-1;
+	clearr(first_bit);
+	clearr(second_bit);
+	clearr(ans);
+}
+int main()
+{
+	LL number1,number2;
+	while(scanf("%lld%lld",&number1,&number2)==2)
+	{
+		LL n=number1;
+		while(n!=0)
+		{
+			first_bit[++index1]=n%2;
+			n=n/2;
+		}
+		n=number2;
+		while(n!=0)
+		{
+			second_bit[++index2]=n%2;
+			n=n/2;
+		}
+		operation();
+		convert_ans_show();
+		clear();
+	}
+	
+}
+
+
+/*
+for(int i=0;i<26;i++)
+	{
+		printf("%c parent of %c level :  %d\n\n",parent_of_city[i],i+'A',level_of_city[i]);
+	}
+
+for(int i=0;i<26;i++)
+	{
+		printf("%c  :  ",'A'+i);
+		for(int j=0;j<G[i].size();j++)
+		{
+			cout<<G[i][j]<<"  ";
+		}
+		cout<<endl;
+	}
+
+	*/

@@ -1,0 +1,130 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+
+#define FOR(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+#define gcd(a,b) {return a ? gcd(b%a,a) : b;}
+
+
+
+
+
+
+map<string,int>stringtoint;
+int n;
+vector<string>items;
+map<string,vector<string> >g;
+map<string,int>weight;
+vector<string>ans;
+struct compare{
+    bool operator() (string a,string b)
+    {
+        return stringtoint[a] > stringtoint[b];
+    }
+};
+priority_queue<string, vector<string>, compare> minimumweight;
+
+int main()
+{
+
+    //read("incb.txt");
+    //write("outcb.txt");
+    int index,m,testcase=1;
+    string node1,node2;
+    while(scanf("%d",&n)==1)
+    {
+        index=0;
+        int tempn=n;
+        while(tempn--)
+        {
+            cin>>node1;
+            items.pb(node1);
+            stringtoint[node1]=++index;
+        }
+        scanf("%d",&m);
+        FOR(i,0,n-1)
+        {
+            weight[items[i]]=0;
+        }
+
+
+        while(m--)
+        {
+            cin>>node1>>node2;
+            g[node1].pb(node2);
+            weight[node2]++;
+        }
+        FOR(i,0,n-1)
+        {
+            if(weight[items[i]]==0)
+            {
+                minimumweight.push(items[i]);
+            }
+        }
+
+        FOR(i,1,n)
+        {
+            string temp=minimumweight.top();
+
+            minimumweight.pop();
+            ans.pb(temp);\
+            if(g[temp].size()==0)
+            {
+                continue;
+            }
+            FOR(j,0,g[temp].size()-1)
+            {
+                string temp1=g[temp][j];
+                weight[temp1]--;
+
+                if(weight[temp1]==0)
+                {
+                    minimumweight.push(temp1);
+                }
+            }
+
+        }
+
+        printf("Case #%d: Dilbert should drink beverages in this order:",testcase++);
+
+        FOR(j,0,ans.size()-1)
+        {
+            cout<<" "<<ans[j];
+        }
+        printf(".\n\n");
+        ans.clear();
+        stringtoint.clear();
+        weight.clear();
+        g.clear();
+        items.clear();
+        while(!minimumweight.empty())
+        {
+            minimumweight.pop();
+        }
+    }
+}

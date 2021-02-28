@@ -1,0 +1,45 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+
+using namespace std;
+
+int main()
+{
+	string s,t;
+
+	while(cin>>s>>t)
+	{
+		int indexs=0;
+		int lengtht=t.size();
+		int lengths=s.size();
+		for(int i=0;i<lengtht;i++)
+		{
+			if(s[indexs]==t[i])indexs++;
+			if(indexs>=lengths)break;
+		}
+		if(indexs>=lengths)
+		{
+			printf("Yes\n");
+		}
+		else
+		{
+			printf("No\n");
+		}
+	}
+}

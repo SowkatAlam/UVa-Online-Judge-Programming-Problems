@@ -1,0 +1,206 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define read freopen("incb.txt","r",stdin)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define write freopen("outcb.txt","w",stdout)
+#define dset(x) memset(x,-1,sizeof(x))
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+int forest[1002][1002];
+int ans[1002][1002];
+int r,c;
+int hero_r,hero_c;
+vector<pair<int,int> >fire_vertices;
+
+int rr[]={-1,0,0,1};
+int cc[]={0,-1,1,0};
+
+void magic_box_bfs_fire()
+{
+    queue<pair<int,int> >q;
+
+
+    pair<int,int>pii;
+
+
+    loop(i,0,fire_vertices.size())
+    {
+        q.push(make_pair(fire_vertices[i].first,fire_vertices[i].second));
+        pii=q.front();
+        ans[pii.first][pii.second]=0;
+
+        while(!q.empty())
+        {
+            pii=q.front();
+
+            loop(i,0,4)
+            {
+
+
+                if(pii.first+rr[i]>=0&&pii.second+cc[i]>=0&&pii.first+rr[i]<r&&pii.second+cc[i]<c)
+                {
+                    //cout<<forest[pii.first+rr[i]][pii.second+cc[i]]<<"  "<<forest[pii.first][pii.second]+1<<"   "<<forest[pii.first+rr[i]][pii.second+cc[i]]<<endl;
+
+                    if(forest[pii.first+rr[i]][pii.second+cc[i]]==1&&ans[pii.first][pii.second]+1<ans[pii.first+rr[i]][pii.second+cc[i]])
+                    {
+
+
+                        ans[pii.first+rr[i]][pii.second+cc[i]]=ans[pii.first][pii.second]+1;
+                        q.push(make_pair(pii.first+rr[i],pii.second+cc[i]));
+                    }
+                }
+            }
+            q.pop();
+        }
+    }
+}
+void magic_box_bfs_the_hero()
+{
+    queue<pair<int,int> >q;
+    pair<int,int>pii;
+    q.push(make_pair(hero_r,hero_c));
+    int visited[r+5][c+5];
+    dset(visited);
+    visited[hero_r][hero_c]=0;
+    int main_ans;
+    bool flag=true;
+
+    while(!q.empty())
+    {
+        if(flag==false)break;
+        pii=q.front();
+        int xxx=pii.first;
+        int yyy=pii.second;
+        loop(i,0,4)
+        {
+            if(xxx+rr[i]<0||yyy+cc[i]<0||xxx+rr[i]>=r||yyy+cc[i]>=c)
+            {
+                main_ans=visited[xxx][yyy]+1;
+                flag=false;
+                break;
+
+            }
+            else if(visited[xxx+rr[i]][yyy+cc[i]]==-1&&forest[xxx+rr[i]][yyy+cc[i]]==1&&ans[xxx+rr[i]][yyy+cc[i]]>visited[xxx][yyy]+1)
+            {
+                visited[xxx+rr[i]][yyy+cc[i]]=visited[xxx][yyy]+1;
+                q.push(make_pair(xxx+rr[i],yyy+cc[i]));
+            }
+        }
+        q.pop();
+    }
+    if(flag==false)
+    {
+        cout<<main_ans<<endl;
+    }
+    else
+    {
+        printf("IMPOSSIBLE\n");
+    }
+
+}
+int main()
+{
+    //read;
+    int test;
+    sci(test);
+    char cc;
+    while(test--)
+    {
+        sci2(r,c);
+
+        loop(i,0,r)
+        {
+            getchar();
+            loop(j,0,c)
+            {
+                scc(cc);
+
+                if(cc=='#')
+                {
+                    forest[i][j]=-1;
+                }
+                else if(cc=='J')
+                {
+                    forest[i][j]=3;
+                    hero_r=i;
+                    hero_c=j;
+                }
+                else if(cc=='F')
+                {
+                    forest[i][j]=2;
+                    fire_vertices.push_back(make_pair(i,j));
+                }
+                else if(cc=='.')
+                {
+                    forest[i][j]=1;
+                }
+                ans[i][j]=10000000;
+            }
+        }
+
+        magic_box_bfs_fire();
+        magic_box_bfs_the_hero();
+        fire_vertices.clear();
+
+        /*
+        loop(i,0,r)
+        {
+
+            loop(j,0,c)
+            {
+                cout<<ans[i][j]<<"  ";
+            }
+            cout<<endl;
+        }
+        */
+
+    }
+}

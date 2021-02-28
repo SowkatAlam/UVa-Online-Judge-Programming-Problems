@@ -1,0 +1,29 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int t;
+double n,m;
+
+int main(){
+    freopen("incb.txt","r", stdin);
+    cin>>t;
+    while(t--){
+        cin>>n>>m;
+        n = ceil((n-2)/3);
+        m = ceil((m-2)/3);
+        unsigned long long int ans= n*m;
+        //cout<<n<<"  "<<m<<endl;
+        cout<< ans<<endl;
+    }
+}

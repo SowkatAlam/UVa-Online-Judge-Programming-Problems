@@ -1,0 +1,116 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define dset(x) memset(x,-1,sizeof(x))
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define read freopen("incb.txt","r",stdin)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define rloope(x,a,n) for(int x=a;x>=n;x--)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define dv(x) cout << #x << ": " <<x << endl
+#define write freopen("outcb.txt","w",stdout)
+#define dvall(x, r)cout<<"\n";loope(i,0,r)cout<<#x<<"["<<i<<"]: "<<x[i]<<"    ";cout<<"\n";
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//pushd, loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+
+#define maxx 110
+
+int c,s,q,node1,node2,desibal;
+int mat[maxx+2][maxx+2];
+
+void floyed_warshall()
+{
+    loope(k,0,c)
+    {
+        loope(i,0,c)
+        {
+            loope(j,0,c)
+            {
+                mat[i][j]=min(mat[i][j],max(mat[i][k],mat[k][j]));
+            }
+        }
+    }
+}
+int main()
+{
+    //read;
+    //write;
+    int cas=1;
+
+    bool first=true;
+    while(sci3(c,s,q)==3)
+    {
+        if(c==0&&s==0&&q==0)break;
+        loope(i,0,maxx)
+        {
+            loope(j,0,maxx)
+            {
+                mat[i][j]=1000000;
+            }
+        }
+
+
+        loope(i,1,s)
+        {
+            cin>>node1>>node2>>desibal;
+            mat[node1][node2]=desibal;
+            mat[node2][node1]=desibal;
+        }
+
+        floyed_warshall();
+        if(first==true)
+        {
+            first=false;
+        }
+        else
+        {
+            printf("\n");
+        }
+        printf("Case #%d\n",cas++);
+
+        loope(i,1,q)
+        {
+            cin>>node1>>node2;
+
+
+            if(mat[node1][node2]==1000000)
+            {
+                printf("no path\n");
+            }
+            else
+            {
+                printf("%d\n",mat[node1][node2]);
+            }
+        }
+    }
+}

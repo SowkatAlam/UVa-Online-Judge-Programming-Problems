@@ -1,0 +1,105 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+typedef map<char,int>mapp;
+
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define write(x) freopen(x,"w",stdout)
+#define dset(x) memset(x,-1,sizeof(x))
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+#define maxx 1000000
+bool flag[maxx+1]={false};
+vi v;
+void generate_prime()
+{
+    v.pb(2);
+    int limit=sqrt(maxx)+2;
+    for(int i=3;i<=maxx;i+=2)
+    {
+
+        if(flag[i]==false)
+        {
+            v.pb(i);
+            if(i<=limit)
+            {
+                for(ull j=i*i;j<=maxx;j+=(2*i))flag[j]=true;
+            }
+
+        }
+
+    }
+}
+int main()
+{
+    //read("incb.txt");
+    //write("outcb.txt");
+    generate_prime();
+    flag[0]=true;
+    flag[1]=true;
+    int n;
+    while(sci(n)==1&&n)
+    {
+        int l=sqrt(n);
+        printf("%d:\n",n);
+        bool check=false;
+        if(n==4)
+            {
+                printf("%d+%d\n",2,2);
+                continue;
+            }
+        for(int i=0;i<=l;i++)
+        {
+            if(check==true)break;
+            if(flag[n-v[i]]==false&&(n-v[i])%2!=0)
+            {
+                printf("%d+%d\n",v[i],n-v[i]);
+                check=true;
+                break;
+            }
+        }
+        if(check==false)
+            printf("NO WAY!\n");
+    }
+}

@@ -1,0 +1,90 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+
+vector<int>a;
+int d;
+int m;
+int dp[205][205][27];
+int N,Q;
+int custom_mod(int x)
+{
+    if(x>=0)
+    {
+        return x%d;
+    }
+    else
+    {
+        return (x+(d*1000000))%d;
+    }
+}
+
+
+int f(int i,int taken,int sum)
+{
+
+	if(taken==m)
+	{
+		if(sum%d==0)
+		{
+			return 1;
+		}
+		else
+        {
+            return 0;
+        }
+
+	}
+	if(i>=N)return 0;
+	int modans=custom_mod(sum);
+	if(dp[i][taken][sum]!=-1)return dp[i][taken][sum];
+	else
+    {
+        return dp[i][taken][modans]=f(i+1,taken,modans)+f(i+1,taken+1,custom_mod(sum+custom_mod(a[i])));
+    }
+
+
+}
+
+int main()
+{
+    //freopen("incb.txt","r",stdin);
+    int value;
+    int setnumber=1;
+    while(true)
+    {
+        scanf("%d%d",&N,&Q);
+        if(N==0&&Q==0)break;
+
+        for(int i=1;i<=N;i++)
+        {
+            scanf("%d",&value);
+            a.push_back(value);
+        }
+        printf("SET %d:\n",setnumber);
+        for(int i=1;i<=Q;i++)
+        {
+            memset(dp,-1,sizeof(dp));
+            scanf("%d%d",&d,&m);
+            printf("QUERY %d: %d\n",i,f(0,0,0));
+        }
+        setnumber++;
+        a.clear();
+    }
+}

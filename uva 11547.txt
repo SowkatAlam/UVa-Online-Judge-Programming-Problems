@@ -1,0 +1,30 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int t;
+long long int n;
+
+int main(){
+    //freopen("incb.txt","r", stdin);
+    cin>>t;
+    while(t--){
+        cin>>n;
+        n= ((63*n*5)+(7492*5))-498;
+        if(n<0){
+            n=n*(-1);
+        }
+        n = (n/10)%10;
+        cout<<n<<endl;
+    }
+}

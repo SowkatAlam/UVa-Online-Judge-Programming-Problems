@@ -1,0 +1,136 @@
+
+
+
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef vector<int>vi;
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define pi acos(-1.0)
+#define mod 1000000007
+#define ll long long int
+#define dsort(c) sort(all(c))
+#define sci(x) scanf("%d",&x)
+#define scc(x) scanf("%c",&x)
+#define scd(x) scanf("%lf",&x)
+#define sz(x) ((int) (x).size())
+#define all(c) c.begin(), c.end()
+#define ull unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+#define write(x) freopen(x,"w",stdout)
+#define dset(x) memset(x,-1,sizeof(x))
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define dclear(x) memset(x,0,sizeof(x))
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define setinf(x) memset(x,126,sizeof(x))
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+#define trall(container, it)\
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+
+//loop , loope , ULL , mp , pb , all , set1 , set0 , abs , setinf , trall , sz
+//--------------------------------********************----------------------------------
+
+//--------------------------------********************----------------------------------
+
+vector<int>vv;
+int t;
+
+
+
+void process(int n)
+{
+    bool flag=false;
+   set<string>setans ;
+
+    for(int bt=0;bt<(1<<n);bt++)
+    {
+        int sum=0;
+        int indexcounting=0;
+        string s;
+        char ch[100];
+        for(int i=0;i<n;i++)
+        {
+
+            int temp=bt&(1<<i);
+            if(temp==0)
+            {
+                sum+=vv[i];
+                if(indexcounting==0)
+                {
+                    sprintf(ch,"%d",vv[i]);
+                    s=s+ch;
+                    indexcounting++;
+                }
+                else
+                {
+                    sprintf(ch,"+%d",vv[i]);
+                    s=s+ch;
+                }
+
+            }
+        }
+        if(sum==t)
+        {
+
+            setans.insert(s);
+            flag=true;
+        }
+    }
+    if(flag==false)
+    {
+        cout<<"NONE"<<endl;
+    }
+    else
+    {
+
+        for(std::set<string>::reverse_iterator it=setans.rbegin();it!=setans.rend();++it)
+        {
+
+            cout<<*it<<"\n";
+        }
+    }
+}
+int main()
+{
+    //read("incb.txt");
+    //write("outcb.txt");
+    int n;
+    while(sci2(t,n)==2)
+    {
+        if(t==0&&n==0)
+        {
+            break;
+        }
+
+        printf("Sums of %d:\n",t);
+        int tempn=n;
+        int value;
+        while(tempn--)
+        {
+            cin>>value;
+            vv.push_back(value);
+        }
+        process(n);
+
+        vv.clear();
+    }
+    return 0;
+}

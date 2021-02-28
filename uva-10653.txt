@@ -1,0 +1,93 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+int R, C, tR, tempR, tempC, tempColumnN;
+int sR,sC,eR,eC;
+
+int g[1005][1005];
+
+int rr[4]={-1,1,0,0};
+int cc[4]={0,0,-1,1};
+
+bool isValid(int ro, int co){
+    if(ro>=0&&co>=0&&ro<=R-1&&co<=C-1 && g[ro][co]!=-1){
+        return true;
+    }
+    return false;
+}
+int runBFS(){
+    queue< pair<int, int>>q;
+    pair<int, int> tempP;
+    int visited[R][C];
+    memset(visited, 0, sizeof(visited));
+    
+    //tempP
+    q.push(make_pair(sR,sC));
+    visited[sR][sC]=1;
+    
+    while(!q.empty()){
+        tempP=q.front();
+        q.pop();
+        for(int i=0;i<4;i++){
+            if(isValid(tempP.first+rr[i], tempP.second+cc[i]) && visited[tempP.first+rr[i]] [tempP.second+cc[i]]==0){
+                q.push(make_pair(tempP.first+rr[i], tempP.second+cc[i]));
+                visited[tempP.first+rr[i]] [tempP.second+cc[i]]=visited[tempP.first] [tempP.second]+1;
+            }
+        }
+    }
+    
+    /*
+    for(int i=0;i<R;i++){
+        for(int j=0;j<C;j++){
+            cout<<visited[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    */
+    return visited[eR][eC]-1;
+}
+
+int main() {
+    
+    cin>>R>>C;
+    
+    while(R!=0&&C!=0){
+        memset(g, 0, sizeof(g));
+    cin>>tR;
+    for(int i=1;i<=tR;i++){
+        cin>>tempR>>tempC;
+        while(tempC--){
+            cin>>tempColumnN;
+            g[tempR][tempColumnN]=-1;
+        }
+    }
+    cin>>sR>>sC>>eR>>eC;
+    cout<<runBFS()<<endl;
+     cin>>R>>C;
+    }
+    
+    /*
+    for(int i=0;i<R;i++){
+        for(int j=0;j<C;j++){
+            cout<<g[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    */
+	return 0;
+}

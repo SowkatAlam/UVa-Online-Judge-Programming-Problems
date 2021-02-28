@@ -1,0 +1,98 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define sci(x) scanf("%d",&x)
+#define sci2(x,y) scanf("%d%d",&x,&y)
+#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+
+#define scd(x) scanf("%lf",&x)
+#define scd2(x,y) scanf("%lf%lf",&x,&y)
+#define scd3(x,y,z) scanf("%lf%lf%lf",&x,&y,&z)
+
+#define scc(x) scanf("%c",&x)
+#define scc2(x,y) scanf("%c%c",&x,&y)
+
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define INF  (int)1e9
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define set0(x) memset(a,0,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+#define abs(x) { return x>0 ? x : -x;}
+#define loop(x,a,n) for(int x=a;x<n;x++)
+#define loope(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define TRvii(x) for(vii::iterator it=x.begin();it!=x.end();it++ )
+
+int mat[101][101];
+
+void floyedwarshall(int n,int node1,int node2,int tcase)
+{
+
+    loop(k,0,n)
+    {
+        loop(i,0,n)
+        {
+            loop(j,0,n)
+            {
+                mat[i][j]=min(mat[i][j],mat[i][k]+mat[k][j]);
+            }
+        }
+    }
+    int ans=0;
+    loop(i,0,n)
+    {
+        ans=max(ans,mat[node1][i]+mat[i][node2]);
+
+    }
+    printf("Case %d: %d\n",tcase,ans);
+}
+int main()
+{
+    //read("incb.txt");
+    int testcase,n,path,node1,node2;
+    sci(testcase);
+    loope(i,1,testcase)
+    {
+
+        sci2(n,path);
+        memset(mat,63,sizeof(mat));
+        loop(i,0,n)
+        {
+            mat[i][i]=0;
+        }
+
+
+
+        while(path--)
+        {
+            sci2(node1,node2);
+            mat[node1][node2]=1;
+            mat[node2][node1]=1;
+        }
+
+        sci2(node1,node2);
+        floyedwarshall(n,node1,node2,i);
+    }
+}

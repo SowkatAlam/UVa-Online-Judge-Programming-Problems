@@ -1,0 +1,91 @@
+/*
+*************************************************
+*                                               *
+*                Sowkat ALam                    *
+*                                               *
+*    Email = sowkat.alam07@gmail.com            *
+*                                               *
+*                                               *
+*************************************************
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define mp make_pair
+#define pb push_back
+#define PI acos(-1.0)
+#define mod 1000000007
+#define sqr(x) ((x)*(x))
+#define LL long long int
+#define sqrt(x) sqrt(abs(x))
+#define sz(x) ((int) (x).size())
+#define ULL unsigned long long int
+#define read(x) freopen(x,"r",stdin)
+#define set(x) memset(a,-1,sizeof(x))
+#define write(x) freopen(x,"w",stdout)
+#define abs(x) { return x>0 ? x : -x;}
+#define FOR(x,a,n) for(int x=a;x<=n;x++)
+#define vsort(v) sort(v.begin(),v.end())
+#define setinf(x) memset(x,126,sizeof(x))
+#define REVFOR(x,a,n) for(int x=a;x>=n;x--)
+#define gcd(a,b) {return a ? gcd(b%a,a) : b;}
+
+
+int *parent;
+
+int findparent(int n)
+{
+    if(parent[n]==n)return n;
+    else {
+            return parent[n]=findparent(parent[n]);
+    }
+}
+
+int main()
+{
+    //ios_base::sync_with_stdio(0); cin.tie(0);
+    //read("incb.txt");
+    int testcase,n,node1,node2;
+    cin>>testcase;
+    char s[100];
+    char c;
+    getchar();
+    while(testcase--)
+    {
+        scanf("%d",&n);
+
+        parent=new int[n+1];
+        FOR(i,0,n)
+        {
+            parent[i]=i;
+        }
+        getchar();
+        int scessfull=0,unscessfull=0;
+        while(gets(s))
+        {
+            if(s[0]=='\0')break;
+            sscanf(s,"%c%d%d",&c,&node1,&node2);
+            int u=findparent(node1);
+            int v=findparent(node2);
+            if(c=='c')
+            {
+                parent[v]=u;
+            }
+            if(c=='q')
+            {
+                if(u==v)
+                {
+                    scessfull++;
+                }
+                else
+                {
+                    unscessfull++;
+                }
+            }
+        }
+        printf("%d,%d\n",scessfull,unscessfull);
+        delete(parent);
+        if(testcase!=0)printf("\n");
+    }
+}

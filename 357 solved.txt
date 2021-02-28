@@ -1,0 +1,63 @@
+#include<cstdio>
+#include<sstream>
+#include<cstdlib>
+#include<cctype>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<queue>
+#include<stack>
+#include<list>
+#include<iostream>
+#include<fstream>
+#include<numeric>
+#include<string>
+#include<vector>
+#include<cstring>
+#include<map>
+#include<iterator>
+using namespace std;
+#define ull unsigned long long int
+
+int coin[5]={1,5,10,25,50};
+int cents;
+ull dp[6][30010]={-1};
+ull dynamic_way(int i,int value)
+{
+    if(value==0)return 1;
+    if(i>=5)return 0;
+    if(dp[i][value]!=-1)return dp[i][value];
+    else
+    {
+        ull ret1=0,ret2=0;
+        if(value-coin[i]>=0)
+        {
+            ret1=dynamic_way(i,value-coin[i]);
+        }
+        ret2=dynamic_way(i+1,value);
+        dp[i][value]=ret1+ret2;
+
+    }
+    return dp[i][value];
+}
+
+int main()
+{
+    //freopen("incb.txt","r",stdin);
+    //freopen("outcb.txt","w",stdout);
+    while(scanf("%d",&cents)==1)
+    {
+        memset(dp,-1,sizeof(dp));
+        ull ans=dynamic_way(0,cents);
+        if(ans==1)
+        {
+
+            printf("There is only 1 way to produce %d cents change.\n",cents);
+        }
+        else
+        {
+
+            printf("There are %llu ways to produce %d cents change.\n",ans,cents);
+        }
+    }
+}
